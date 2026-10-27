@@ -234,8 +234,8 @@ code { font-family: var(--font-mono); font-size: .88em; color: var(--mint); }
 .study:hover .phone { transform: translateY(-4px); }
 .screen { position: relative; width: 100%; height: 100%; border-radius: 30px; overflow: hidden; background: var(--tbg); color: var(--tfg); transition: background .5s; box-shadow: inset 0 0 40px rgba(0,0,0,.35);
   font-family: var(--font-mono); font-size: 11px; line-height: 1.5; padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 2px; }
-.screen .soul { display: block; width: 100%; margin: 20px 0 8px; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tc1) 30%, transparent)); }
-.screen .soul.home { margin: 32px 0 10px; }
+.screen .soul { display: block; width: 100%; margin: var(--air) 0 10px; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tc1) 30%, transparent)); }
+.screen .soul.home { margin: calc(var(--air) + 6px) 0 12px; }
 .tb { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; white-space: nowrap; color: var(--tdim); border-bottom: 1px solid color-mix(in srgb, var(--tdim) 45%, transparent); padding-bottom: 4px; margin-bottom: 2px; }
 .tb b { font-weight: 500; color: var(--tc1); }
 .tb .ws { letter-spacing: 2px; } .tb .ws i { font-style: normal; color: var(--tc1); }
@@ -272,8 +272,11 @@ code { font-family: var(--font-mono); font-size: .88em; color: var(--mint); }
 .icon .l { font-size: 9px; color: var(--tdim); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .clock { font-size: 44px; font-weight: 500; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; text-align: center; color: var(--tfg); }
 .tcenter { text-align: center; }
-/* Widgets anchor to the prompt and grow upward; the top of the screen stays the soul's and the bar's. */
-.wzone { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 22px; margin-bottom: 8px; }
+/* Content anchors to the prompt and grows upward (drawer, widgets); the top stays the bar's and the soul's,
+   with --air of empty screen under the hairline. Overflow clips at the top, like scrollback. */
+.screen { --air: 44px; }
+.bzone { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding-top: var(--air); margin-bottom: 10px; }
+.bzone > * { flex: none; }
 .wstack { display: flex; flex-direction: column; gap: 7px; min-width: 0; flex: none; }
 .w { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .w .h { display: flex; align-items: center; gap: 6px; color: var(--tdim); font-size: 10px; white-space: nowrap; }
