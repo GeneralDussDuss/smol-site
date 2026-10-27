@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol — not found</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" >Souls</a>
+    <a href="launcher.html" >Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" >Spec</a>
+    <a href="story.html" >Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+<section class="section wrap" style="padding-top:8rem;min-height:70vh;display:grid;align-items:center">
+  <div class="split">
+    <div>
+      <span class="sec-label">404 // NOT FOUND</span>
+      <h2 class="grad">No Such File</h2>
+      <div class="shell" style="max-width:520px"><div class="shell-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shell-name">smol</span></div><pre><span class="p">$</span> cat <span id="path">that page</span>
+<span class="o">✗</span> no such file or directory <span class="c">· logged</span>
+<span class="k">♪</span> <span class="c">"Nothing there. Want the home screen?"</span>
+<span class="p">$</span> <span class="c">█</span></pre></div>
+      <p style="margin-top:1.2rem"><a class="btn btn-primary" href="index.html">Back to home</a> <a class="btn btn-secondary" href="souls.html">See the souls</a></p>
+    </div>
+    <div class="stage" data-cycle><canvas class="soul" data-rows="14" data-cols="48" data-zoom="1.1"></canvas><div class="stage-hud"><div class="stage-note"><b data-soulname>nyx</b> · <span class="stateline">· idle</span></div></div></div>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script>try{document.getElementById('path').textContent=location.pathname.split('/').pop()||'that page'}catch(e){}</script>
+<script src="assets/souls.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

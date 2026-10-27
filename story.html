@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol — story</title>
+<meta name="description" content="Why smol exists: a visual artist who moved to a terminal-first desktop, got Gemma running in airplane mode on his phone, and wanted a home screen worth looking at two hundred times a day.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" >Souls</a>
+    <a href="launcher.html" >Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" >Spec</a>
+    <a href="story.html" aria-current="page">Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+
+<section class="section wrap" style="padding-top:7rem;">
+  <div class="story reveal">
+    <div>
+      <span class="sec-label">01 // STORY</span>
+      <h2 data-scramble>Why I'm Building It</h2>
+      <p class="by">GeneralDussDuss · Atlanta</p>
+      <div class="stage" data-cycle style="margin-top:1.4rem;"><canvas class="soul" data-rows="10" data-cols="28" data-zoom="1.2"></canvas><div class="stage-hud"><div class="stage-note"><b data-soulname>nyx</b> · <span class="stateline">· idle</span></div></div></div>
+    </div>
+    <div class="story-body">
+      <p class="lede">I'm a visual artist first and a computer nerd second.</p>
+      <p>By trade I design bespoke jewelry in CAD and work the floor at a fine-dining restaurant; the rest of the time I'm teaching myself software, firmware and security from the ground up. I've put about fifty apps on a Cardputer, written a music player with a GPU visualizer for my Linux desktop, and spent too many nights flashing ESP32s at the wrong offset.</p>
+      <p>Earlier this year I moved my whole desktop to a terminal-first setup and it ruined me for everything else. Keyboard-first, every window visible, a theme switch that changes the entire machine at once. Then I'd pick up my phone and it felt like a different, dumber decade. The launchers that tried to fix that were abandoned, or ugly, or both.</p>
+      <p>At the same time I had Gemma 4 running fully on my phone, with tool calls, in airplane mode. That was the moment. A terminal home screen with a local brain, that asks before it acts, that never phones home, and that is beautiful enough that you'd want to look at it two hundred times a day. That's smol.</p>
+      <p>The soul started as the orb from my music visualizer, <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>. I wanted it to feel alive without pretending to be a person, so it's a nebula in braille: it breathes when it's idle, leans in when it's listening, churns when it thinks, and glows when it talks. There are three of them because one personality is never enough for everyone. Everything you see on this site runs live in your browser; the Android version runs the same shaders.</p>
+      <p>The brain is <a href="https://github.com/alexeyw/knotwork" target="_blank" rel="noopener">Knotwork</a>, a local-first Android agent somebody else built in the open with one star and a thousand commits. I was halfway through writing the same thing worse. Standing on it means smol ships the face and the shell, which is the part only I was going to make anyway.</p>
+      <p class="sig">Nothing leaves your phone. Ask before acting. Make it gorgeous. <span style="color:var(--faint)">· D</span></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal center" style="margin-bottom:2rem;">
+    <span class="sec-label">02 // THE SUITE</span>
+    <h2 data-scramble>Same House, Different Rooms</h2>
+    <p class="prose">smol shares a design system with the rest of the things I build: Orbitron, Rajdhani, JetBrains Mono, a named accent ramp, four glow tokens. Orpheus is blue. smol is violet. Both run their real engine on their own landing page instead of drawing it in CSS.</p>
+  </div>
+  <div class="grid grid-2 reveal" data-stagger="100">
+    <a class="card" href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener" data-tilt="6"><span class="ico" style="color:#5b8cff">◢</span><h3>Orpheus</h3><p>A hi-res TIDAL player that thinks it's a terminal, with GPU visualizers that travel at the pace of the track. Omarchy + Hyprland. The orb in smol's Nyx is its fifth world.</p></a>
+    <a class="card" href="index.html" data-tilt="6"><span class="ico">✦</span><h3>smol</h3><p>A terminal home screen with a brain. Android, local Gemma 4, three glyph souls, a confirm step before anything happens.</p></a>
+  </div>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script src="assets/souls.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "uniforms": {
+    "res": "vec2 px",
+    "time": "s",
+    "bandTex": "32x1 R8 texture, 0..1 per band (AGSL: float[32])",
+    "c1 c2 c3": "palette, cyclic c1>c2>c3>c1",
+    "bg fg": "theme",
+    "bass": "rim radius drive 0..1",
+    "energy": "halo + swirl speed 0..1",
+    "beat": "one-shot pulse, decays exp(-3.2t)",
+    "flow": "integrated travel, never time*speed",
+    "spin": "ring spin multiplier",
+    "roll": "camera roll rad",
+    "bob": "vertical float",
+    "shift": "palette phase = t*0.02 + flow*0.015",
+    "blink": "0 open .. 1 closed",
+    "mouth": "voice envelope 0..1",
+    "wl wt ws": "state weights listening/thinking/speaking, eased k=1-exp(-4.5dt); idle = 1-wl-wt-ws"
+  },
+  "states": {
+    "idle": {
+      "bass": "0.15 + 0.09 sin(0.75t)",
+      "energy": 0.2,
+      "spin": 1,
+      "flowRate": 0.6,
+      "roll": "on",
+      "bob": "off",
+      "bands": "0.15 + 0.1 sin(0.7t + 0.4i)",
+      "look": "scale x0.92, half-lidded (Mochi lid 0.38), sparse lattice (Bit), alpha x0.75"
+    },
+    "listening": {
+      "bass": 0.26,
+      "energy": 0.15,
+      "spin": 0.12,
+      "flowRate": 0.05,
+      "roll": "eases to 0",
+      "bob": "sin(1.1t) * 0.025",
+      "bands": 0.06,
+      "look": "scale x1.18, inward rings at 7/rim spacing speed 1.1, 28-tick VU ring at rim+0.075, eyes x1.3 fixed on user, lattice snaps upright and fills"
+    },
+    "thinking": {
+      "bass": "0.18 + 0.07 sin(2.2t)",
+      "energy": 0.75,
+      "spin": 3.2,
+      "flowRate": 2.4,
+      "roll": "on",
+      "bands": "0.15 + 0.3|sin(2.3i + 5.5t)|",
+      "look": "scan band sweep 0.55 Hz, 6 orbit sparks, body cooled toward c2, eyes up-right + 3 thought dots, lattice spins with flow"
+    },
+    "speaking": {
+      "bass": "0.12 + 0.45 env",
+      "energy": 0.45,
+      "spin": 1,
+      "flowRate": 0.9,
+      "beat": "0.75 pulse every 1.4-1.8 s (per phrase, never per syllable)",
+      "bands": "env (0.25 + 0.75 e^(-i/9)) (0.7 + 0.3 sin(1.3i + 9t))",
+      "mouth": "0.15 + 0.85 env, env resampled every 90 ms",
+      "look": "outward waves at 6/rim speed 1.6 scaled by mouth, centre waveform from bands, Mochi bounce + hearts, Bit column bounce"
+    }
+  },
+  "blink": {
+    "every": "2.2 + rand*3.2 s",
+    "duration": "0.18 s (0.32 s when listening)",
+    "shape": "sin(pi x)"
+  },
+  "music": {
+    "bpm": 104,
+    "kick": "exp(-7 phase) on even beats, bands 0..5",
+    "snare": "exp(-9 phase) on odd beats, bands 8..15",
+    "hats": "0.12 + 0.1 sin(13t + i) bands 18..31"
+  },
+  "tiers": {
+    "flagship": "12 GB+, Gemma 4 E4B, braille pass 60 fps",
+    "mid": "8 GB, E2B, ramp pass 30 fps, rings off",
+    "budget": "<=6 GB, launcher-only or E2B with warning, CPU text soul 10 fps",
+    "web": "this site: 30 fps cap, 24 on phones; columns 56 / 80 / 112 by width"
+  }
+}

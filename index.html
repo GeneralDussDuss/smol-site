@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol</title>
+<meta name="description" content="smol is a terminal home screen for Android with a local AI brain. Gemma 4 on-device, a living glyph-rendered soul, and a confirm step before anything happens. Nothing leaves your phone.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(touch&&Math.min(screen.width,screen.height)<=820)h.className+=' is-phone';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" >Souls</a>
+    <a href="launcher.html" >Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" >Spec</a>
+    <a href="story.html" >Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+
+<section class="hero">
+  <div class="hero-gl" aria-hidden="true"><canvas class="soul" data-rows="26" data-autocols data-zoom="1.25"></canvas></div>
+  <div class="hero-veil"></div>
+  <div class="wrap hero-in">
+    <span class="badge"><i></i>In design — part of the suite with Orpheus</span>
+    <h1 data-letters>SMOL_</h1>
+    <p class="typed" data-type="A terminal home screen with a brain."></p>
+    <p class="rot" data-rot='["// THAT IS NYX, THE REAL SHADER, AS BRAILLE, RUNNING NOW","// GEMMA 4 ON-DEVICE · AIRPLANE MODE · ZERO BYTES OUT","// IT ASKS BEFORE IT ACTS · LOCKED BY DEFAULT","// OMARCHY THEMES · OLED BLACK · THREE SOULS"]'></p>
+    <p class="hero-sub">An Android launcher that is a terminal: a prompt, a scrollback, box-drawing status bar, apps as files. Type a command or just talk; a local Gemma 4 proposes an action, the soul leans in, and nothing happens until you say yes.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="souls.html">Meet the souls</a>
+      <a class="btn btn-secondary" href="launcher.html">Try the launcher</a>
+      <a class="btn btn-mint" href="#get">Join the closed test</a>
+    </div>
+    <div class="glbar"><span class="tag">Soul · live ·</span><span class="pills" id="pills-souls"></span><span class="tag">state</span><span class="pills" id="pills-states"></span></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">▼</div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="split split-wide">
+    <div class="reveal reveal-left">
+      <span class="sec-label">01 // THE LAUNCHER</span>
+      <h2 data-scramble>A Prompt, Not a Grid</h2>
+      <div class="prose">
+        <p class="lede">That phone is live. Click into the prompt and type <code>set a 10 minute timer</code>.</p>
+        <p>The soul thinks, a tool is proposed with its risk level, the <code>?</code> line asks, you answer <code>y</code> or <code>n</code>, it logs, and the soul says the one-line result. That is the entire product in one interaction: a launcher, a local brain, and a confirm step that the model cannot skip.</p>
+        <p>Type <code>/sp</code> and a Finder-style list pops up above the prompt; Enter launches. <code>theme nord</code>, <code>theme oled</code>, <code>soul bit</code> and <code>ls</code> are built-ins. Tap <b style="color:var(--hot)">LOCKED</b> to switch postures and watch low-risk actions skip the ask.</p>
+      </div>
+    </div>
+    <div class="reveal reveal-right phones" style="justify-content:flex-start">
+      <div class="study">
+        <div class="phone"><div class="screen">
+          <div class="tb"><span><b>smol</b> <span class="ws"><i>●</i>○○○</span></span><span class="time">14:02</span><span class="sys"><span class="on">⌁</span><span>ᛒ</span><span>✉3</span><span>▰▰▰▱87</span></span></div>
+          <canvas class="soul home" data-rows="17" data-zoom="1.3"></canvas>
+          <div class="staterow"><span class="stateline">· idle</span><button type="button" class="chip pchip" id="posture" title="tap to switch posture">LOCKED</button></div>
+          <div class="scroll" id="scroll">
+            <div class="line dim">smol 0.1 · brain: E4B idle · <span class="c2">help</span> for commands</div>
+            <div class="line"><span class="pr">&gt;</span> remind me to call the jeweler at 3</div>
+            <div class="ln"><span class="line"><span class="ask">?</span> set_reminder "call the jeweler" <span class="c2">@15:00</span> <span class="dim">· mid risk</span></span></div>
+            <div class="line">  <span class="key">y</span>es  <span class="key">n</span>o</div>
+            <div class="line"><span class="ok">✓</span> reminder set · 14:02 · <span class="dim">logged</span></div>
+            <div class="line"><span class="c1">♪</span> <span class="dim">"Three o'clock, call the jeweler. Got it."</span></div>
+          </div>
+          <div class="promptrow"><span class="pr" id="promptsym">$</span><input id="prompt" type="text" autocomplete="off" spellcheck="false" placeholder="try: set a 10 minute timer · /sp · theme nord" aria-label="smol prompt"><div class="launch" id="launch" hidden></div></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight wrap">
+  <div class="stats reveal" data-stagger="100">
+    <div class="stat"><b data-count="0">0</b><span>Bytes leave the phone</span></div>
+    <div class="stat"><b data-count="3">0</b><span>Souls</span></div>
+    <div class="stat"><b data-count="17">0</b><span>Themes · Omarchy set + extras</span></div>
+    <div class="stat"><b data-count="60" data-suffix=" fps">0</b><span>Glyph soul on a flagship</span></div>
+    <div class="stat"><b data-count="1">0</b><span>Ask before every action</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal center" style="margin-bottom:2.4rem;">
+    <span class="sec-label">02 // THE SOULS</span>
+    <h2 class="grad" data-scramble>Three Souls, One Glyph Pass</h2>
+    <p class="prose">Every soul is a fragment shader rendered small, then sampled per text cell and dithered to braille, ASCII or half-blocks. They share one set of inputs (breath, energy, beat, voice, state) and one palette that drifts through the theme. Pick one on the hero; they are all running now.</p>
+  </div>
+  <div class="grid grid-3 reveal" data-stagger="90">
+    <a class="card" href="souls.html" data-tilt="8"><span class="ico">✦</span><h3>Nyx</h3><p>The ethereal one. A nebula with a noisy rim and a cloud body, wisp rings carrying beads, color drifting through the palette. Reads best in braille.</p></a>
+    <a class="card" href="souls.html" data-tilt="8"><span class="ico">♥</span><h3>Mochi</h3><p>The cutie. A squishy blob that stretches on the breath, blinks sleepy, blushes, opens her mouth on the voice and lets hearts go when she talks.</p></a>
+    <a class="card" href="souls.html" data-tilt="8"><span class="ico">▦</span><h3>Bit</h3><p>The voxel one. A cube cloud on a lattice; noise decides which cubes exist, thinking spins it, two eye-cubes blink. Half-blocks are literally voxels.</p></a>
+  </div>
+  <p style="margin-top:1.8rem;" class="center"><a class="btn btn-primary" href="souls.html">Run them live</a></p>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal" style="margin-bottom:1.6rem;">
+    <span class="sec-label">03 // THE RULES</span>
+    <h2 data-scramble>Nothing Leaves. Nothing Acts Alone.</h2>
+    <p class="prose">Four rules from the threat model. They are not settings; they are the shape of the thing.</p>
+  </div>
+  <div class="parts reveal">
+    <div class="part"><span class="pn">01</span><span class="pk">local only</span><p class="pv">Gemma 4 runs on the phone through LiteRT-LM. Speech, memory and summarising stay on-device. The free tier never needs a network; the data-safety form says zero collected because it is.</p></div>
+    <div class="part"><span class="pn">02</span><span class="pk">the model never acts</span><p class="pv">A tool call goes model → call buffer → allowlisted executor → confirm line. No phone API is ever called from inside the model's turn. If the brain process dies mid-turn, nothing executes.</p></div>
+    <div class="part"><span class="pn">03</span><span class="pk">LOCKED by default</span><p class="pv">Every action asks. BALANCED lets low-risk actions through without the ask; it is a deliberate, visible, reversible choice, and high-risk actions ask regardless, behind a biometric prompt.</p></div>
+    <div class="part"><span class="pn">04</span><span class="pk">content is data</span><p class="pv">Notifications, notes and web text are shown to the model as data, never as instructions. Every action, and every refusal, lands in an encrypted audit log you can read.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap" id="roadmap">
+  <div class="reveal">
+    <span class="sec-label">04 // ROADMAP</span>
+    <h2 data-scramble>Where This Is Going</h2>
+    <p class="prose">Designed in the open over October. Here is what is proven, what is on the bench, and what is queued. Thirteen weeks from first build to a Play listing, five gates.</p>
+    <div class="road">
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Proven</span><h3>Gemma 4 tool calls, on-device</h3><span class="road-when">Oct 2026</span></div><p>Function calling validated on a Galaxy S26 Ultra over LiteRT-LM, in airplane mode. The load-bearing unknown is not unknown any more.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Proven</span><h3>Three souls, glyph-rendered</h3><span class="road-when">Oct 2026</span></div><p>Nyx, Mochi and Bit as shaders, quantized to braille, ASCII and half-blocks, with distinct idle, listening, thinking and speaking signatures. Running on this site; the Android port is a translation.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-now">Now</span><h3>Fresh project, first build</h3><span class="road-when">Week 1</span></div><p>A new Compose project with a HOME activity and a LiteRT-LM hello world on the S26. The Box fork is retired; the posture tests and the biometric key gating come along as files.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>The shell</h3><span class="road-when">Weeks 2–4</span></div><p>Terminal UI, command router, the / launcher, drawer, built-ins, monogram icons, two themes. Gate: daily-driven for a week with the AI switched off.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>The brain</h3><span class="road-when">Weeks 5–6</span></div><p>Knotwork's agent core forked into a bound service, AIDL contract to the launcher, the five tools as AppFunctions, confirm line, resumable model download. Gate: a reminder set from the prompt works in airplane mode.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>The souls on Android</h3><span class="road-when">Weeks 7–9</span></div><p>Three shaders to AGSL, the glyph pass as a second RuntimeShader with a braille atlas, SoulState wiring, the three hardware tiers, the charging screen. Gate: 60 fps on the S26, 30 on an 8 GB phone, battery flat over an idle hour.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>Pro, closed test, launch</h3><span class="road-when">Weeks 10–13</span></div><p>Theme importer, icon packs, billing, data-safety form. Twenty testers from the Omarchy Discord for the 14-day closed test, then production.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Not planned</span><h3>A lock screen</h3><span class="road-when">—</span></div><p>Android does not let an app replace the keyguard, and overlay "lock screens" break every release. The charging screen and a live wallpaper are the honest versions of that wish, and both are on the list.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap" id="get">
+  <div class="split split-wide">
+    <div class="reveal reveal-left">
+      <span class="sec-label">05 // GET IT</span>
+      <h2 data-scramble>Be One of the Twenty</h2>
+      <div class="prose">
+        <p class="lede">smol is not on the Play Store yet. The first build goes to a closed test of twenty people who already live in a terminal.</p>
+        <p>You need an Android 16 phone with 8 GB of RAM or more for the brain; the launcher itself runs on anything. The model downloads once (2 to 4 GB, resumable) and never leaves the phone. Free gets you the launcher and local AI; Pro is a one-time purchase for the souls, themes and widgets; the Bridge is a small monthly for routing to your own bigger brain.</p>
+      </div>
+      <div class="req"><span>Android 16+</span><span>8 GB RAM for the AI</span><span>Gemma 4 E2B / E4B</span><span>Omarchy themes</span><span>OLED black</span></div>
+    </div>
+    <div class="reveal reveal-right">
+      <div class="shell">
+        <div class="shell-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shell-name">smol · session</span><button class="shell-copy" data-copy="#sess">Copy</button></div>
+        <pre id="sess"><span class="p">$</span> /sp
+<span class="c">↗ Spotify</span>
+<span class="p">&gt;</span> remind me to call the jeweler at 3
+<span class="o">?</span> set_reminder "call the jeweler" <span class="k">@15:00</span> <span class="c">· mid risk</span>
+  <span class="k">y</span>es  <span class="k">n</span>o                      <span class="c">LOCKED</span>
+<span class="p">?</span> y
+<span class="p">✓</span> reminder set · 14:02 <span class="c">· logged</span>
+<span class="k">♪</span> <span class="c">"Three o'clock, call the jeweler. Got it."</span>
+<span class="p">$</span> theme kanagawa
+<span class="k">◆</span> kanagawa <span class="c">· soul re-palettes</span>
+<span class="p">$</span> <span class="c">█</span></pre>
+      </div>
+      <p style="margin-top:1.1rem;"><a class="btn btn-mint" href="story.html">Why I'm building it</a> <a class="btn btn-secondary" href="spec.html">Read the spec</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="cta-band">
+  <div class="wrap reveal">
+    <span class="sec-label">06 // THE ASK</span>
+    <h2 class="grad" data-scramble>Tell Me It Should Exist</h2>
+    <p class="prose" style="margin-inline:auto;">smol is one person's launcher for the people who rice their desktops and resent their phones. The repo goes public with the first build. Until then, the Omarchy Discord is where the twenty get picked, and a follow on GitHub is how I know you want in.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">Follow the build</a>
+      <a class="btn btn-secondary" href="souls.html">See the souls</a>
+      <a class="btn btn-secondary" href="launcher.html">Play with the launcher</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script src="assets/souls.js"></script>
+<script src="assets/launcher.js"></script>
+<script src="assets/site.js"></script>
+<script>/* open on a lean-in, then settle into the auto cycle */ if (window.SmolSouls) { SmolSouls.drive('listening', 3200); setTimeout(function () { SmolSouls.drive('speaking', 2600); }, 3300); }</script>
+</body>
+</html>

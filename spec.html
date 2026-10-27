@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol — spec</title>
+<meta name="description" content="The reference the Android port reads from: the three soul shaders, the shared prelude, the SoulState to uniform mapping, and the glyph pass, as the exact strings this site runs.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" >Souls</a>
+    <a href="launcher.html" >Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" aria-current="page">Spec</a>
+    <a href="story.html" >Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+
+<section class="section wrap" style="padding-top:7rem;">
+  <div class="split split-wide" style="align-items:start">
+    <div class="reveal reveal-left">
+      <span class="sec-label">01 // THE REFERENCE</span>
+      <h2 class="grad" data-scramble>Same Strings, Readable</h2>
+      <div class="prose">
+        <p class="lede">The Android port is a translation, not a reinterpretation. These are the exact shader strings this site runs, plus the state mapping and the glyph pass written down.</p>
+        <p>GLSL ES 1.0 as written for WebGL. For AGSL: <code>main(float2)</code> returns <code>half4</code>, the band texture becomes a <code>float[32]</code> uniform with a manual lerp, <code>mat2</code> and <code>atan</code> carry over, and no derivatives are used anywhere, so nothing needs <code>fwidth</code>.</p>
+        <p>The files are published next to this page under <code>spec/</code> and dumped from <code>assets/souls.js</code> by the build, so they cannot drift from what you see.</p>
+      </div>
+      <div class="req">
+        <a class="pill-btn" href="spec/README.md">README.md</a><a class="pill-btn" href="spec/prelude.glsl">prelude.glsl</a><a class="pill-btn" href="spec/nyx.glsl">nyx.glsl</a><a class="pill-btn" href="spec/mochi.glsl">mochi.glsl</a><a class="pill-btn" href="spec/bit.glsl">bit.glsl</a><a class="pill-btn" href="spec/soul-state.json">soul-state.json</a><a class="pill-btn" href="spec/glyph-pass.md">glyph-pass.md</a>
+      </div>
+    </div>
+    <div class="reveal reveal-right">
+      <div class="stage" data-cycle style="margin-bottom:1rem"><canvas class="soul" data-rows="12" data-cols="64" data-zoom="1.2"></canvas><div class="stage-hud"><div class="vtabs"><span class="pills" id="pills-souls"></span></div><div class="stage-note"><b data-soulname>nyx</b> · <span class="stateline">· idle</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal" style="margin-bottom:1.4rem;">
+    <span class="sec-label">02 // FILES</span>
+    <div class="pills" id="spectabs"></div>
+  </div>
+  <div class="shell reveal">
+    <div class="shell-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shell-name" id="specname">spec/nyx.glsl</span><button class="shell-copy" data-copy="#speccode">Copy</button></div>
+    <pre id="speccode" class="tall" tabindex="0"></pre>
+  </div>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script src="assets/souls.js"></script>
+<script src="assets/spec.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

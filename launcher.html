@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol — launcher</title>
+<meta name="description" content="smol's four screens, live: the prompt with the confirm loop, the app drawer as a directory, a rearrangeable widget stack, and the charging screen. Omarchy themes and OLED black.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" >Souls</a>
+    <a href="launcher.html" aria-current="page">Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" >Spec</a>
+    <a href="story.html" >Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+
+<section class="section wrap" style="padding-top:7rem;">
+  <div class="reveal" style="margin-bottom:1.6rem;">
+    <span class="sec-label">01 // FOUR SCREENS, LIVE</span>
+    <h2 class="grad" data-scramble>Home Is a Prompt</h2>
+    <p class="prose">Every screen below runs the real soul and the real theme engine. The first phone takes input; the third one rearranges. Change the theme and all four re-palette in the same frame, the way Omarchy does on the desktop.</p>
+  </div>
+  <div class="controls" style="margin-bottom:2.4rem;">
+    <div class="group"><label>theme · omarchy set</label><div class="pills" id="pills-themes"></div></div>
+    <div class="group"><label>extras</label><div class="pills" id="pills-themes2"></div></div>
+    <div class="group"><label>display</label><div class="pills"><button type="button" class="pill-btn" data-toggle="oled">● oled black</button></div></div>
+    <div class="group"><label>soul</label><div class="pills" id="pills-souls"></div></div>
+    <div class="group"><label>render</label><div class="pills" id="pills-modes"></div></div>
+  </div>
+
+  <div class="phones reveal">
+
+    <div class="study">
+      <div class="phone"><div class="screen">
+        <div class="tb"><span><b>smol</b> <span class="ws"><i>●</i>○○○</span></span><span class="time">14:02</span><span class="sys"><span class="on">⌁</span><span>ᛒ</span><span>✉3</span><span>▰▰▰▱87</span></span></div>
+        <canvas class="soul home" data-rows="17" data-zoom="1.3"></canvas>
+        <div class="staterow"><span class="stateline">· idle</span><button type="button" class="chip pchip" id="posture" title="tap to switch posture">LOCKED</button></div>
+        <div class="scroll" id="scroll">
+          <div class="line dim">smol 0.1 · brain: E4B idle · <span class="c2">help</span> for commands</div>
+          <div class="line"><span class="pr">&gt;</span> remind me to call the jeweler at 3</div>
+          <div class="ln"><span class="line"><span class="ask">?</span> set_reminder "call the jeweler" <span class="c2">@15:00</span> <span class="dim">· mid risk</span></span></div>
+          <div class="line">  <span class="key">y</span>es  <span class="key">n</span>o</div>
+          <div class="line"><span class="ok">✓</span> reminder set · 14:02 · <span class="dim">logged</span></div>
+          <div class="line"><span class="c1">♪</span> <span class="dim">"Three o'clock, call the jeweler. Got it."</span></div>
+        </div>
+        <div class="promptrow"><span class="pr" id="promptsym">$</span><input id="prompt" type="text" autocomplete="off" spellcheck="false" placeholder="try: set a 10 minute timer · /sp · theme nord" aria-label="smol prompt"><div class="launch" id="launch" hidden></div></div>
+      </div></div>
+      <div class="cap"><h3>01 home <span>· the prompt, live</span></h3><p>Type into it. <code>/sp</code> pops the app list; <code>theme nord</code>, <code>soul bit</code>, <code>ls</code>, <code>help</code> are built-ins; anything else goes to the brain and comes back as a proposed action you confirm. Tap LOCKED to switch posture.</p></div>
+    </div>
+
+    <div class="study">
+      <div class="phone"><div class="screen">
+        <div class="tb"><span><b>smol</b> <span class="ws">○<i>●</i>○○</span></span><span class="time">14:02</span><span class="sys"><span class="on">⌁</span><span>ᛒ</span><span>✉3</span><span>▰▰▰▱87</span></span></div>
+        <canvas class="soul" data-rows="6" data-zoom="3.4"></canvas>
+        <div class="stateline">· idle</div>
+        <div class="line"><span class="pr">$</span> ls /</div>
+        <div class="line dim">drwx  /music  /games  /work  /cam</div>
+        <div class="igrid">
+          <div class="icon"><div class="g">Sp</div><div class="l">spotify</div></div><div class="icon"><div class="g">Si</div><div class="l">signal</div></div><div class="icon"><div class="g">Ch</div><div class="l">chrome</div></div><div class="icon"><div class="g">Ti</div><div class="l">tidal</div></div>
+          <div class="icon"><div class="g">St</div><div class="l">steam</div></div><div class="icon"><div class="g">Ob</div><div class="l">obsidian</div></div><div class="icon"><div class="g">Tx</div><div class="l">termux</div></div><div class="icon"><div class="g">Gh</div><div class="l">github</div></div>
+          <div class="icon"><div class="g">Pr</div><div class="l">proton</div></div><div class="icon"><div class="g">Ma</div><div class="l">maps</div></div><div class="icon"><div class="g">Ph</div><div class="l">photos</div></div><div class="icon"><div class="g">Ts</div><div class="l">tailscale</div></div>
+        </div>
+        <div class="line dim">12 apps · 4 dirs · <span class="c2">mv</span> to file</div>
+        <div class="spacer"></div>
+        <div class="line"><span class="pr">$</span> <span class="cursor"></span></div>
+      </div></div>
+      <div class="cap"><h3>02 drawer <span>· ls /</span></h3><p>Apps are files, folders are directories, <code>mv spotify /music</code> files an app. Monogram icons in the theme's three accents; hand-drawn Nerd Font glyphs replace them in the Pro icon pack.</p></div>
+    </div>
+
+    <div class="study">
+      <div class="phone"><div class="screen">
+        <div class="tb"><span><b>smol</b> <span class="ws">○○<i>●</i>○</span></span><span class="time">14:02</span><span class="sys"><span class="on">⌁</span><span>ᛒ</span><span>✉3</span><span>▰▰▰▱87</span></span></div>
+        <div class="wstack" id="wstack"></div>
+        <div class="spacer"></div>
+        <div class="line"><span class="pr">$</span> <span class="cursor"></span></div>
+      </div></div>
+      <div class="cap"><h3>03 widgets <span>· the stack</span></h3><p>Widgets are text blocks in the scrollback, each one command away (<code>widget add weather</code>). Toggle and reorder them here; the phone updates live.</p></div>
+      <div class="editor"><div class="eh">customize</div><div id="weditor"></div></div>
+    </div>
+
+    <div class="study">
+      <div class="phone"><div class="screen">
+        <div class="tb"><span class="dim">aod</span><span class="dim">⚡ charging</span></div>
+        <div class="spacer"></div>
+        <canvas class="soul" data-rows="24" data-zoom="1.05" data-dim="0.55"></canvas>
+        <div class="spacer"></div>
+        <div class="clock">14:02</div>
+        <div class="line tcenter dim">tue oct 27 · 87% · 3 notifs</div>
+        <div class="line tcenter"><span class="c2">⏰</span> 06:30 <span class="dim">· </span><span class="c3">♪</span> <span class="dim">Yeat – Nothing Change</span></div>
+        <div class="spacer"></div>
+      </div></div>
+      <div class="cap"><h3>04 charging <span>· the honest lock screen</span></h3><p>Dim soul at a low frame rate, clock, next alarm, now playing. OLED black makes it nearly free on battery, and it is the live-wallpaper candidate.</p></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal" style="margin-bottom:2rem;">
+    <span class="sec-label">02 // WHAT IS IN THE BOX</span>
+    <h2 data-scramble>Free, Pro, Bridge</h2>
+    <p class="prose">Charge once for what runs on the phone, monthly for the bridge to a bigger brain. Local AI stays free, because it costs nothing per user and it is the reason to install.</p>
+  </div>
+  <div class="grid grid-3 reveal" data-stagger="90">
+    <div class="card" data-tilt="6"><span class="num">FREE</span><h3>smol</h3><p>The full launcher, built-in commands, the / launcher, monogram icons, two themes, the CPU text soul, and local Gemma 4 chat with tool calls behind the confirm line.</p></div>
+    <div class="card" data-tilt="6"><span class="num">$5.99 · ONCE</span><h3>smol Pro</h3><p>All themes and the Omarchy theme importer, glyph icon packs, the GPU braille soul with rings, music-reactive soul, the charging screen, widgets, <code>alias</code> macros, unlimited scrollback.</p></div>
+    <div class="card" data-tilt="6"><span class="num">$3.99 / MO · $29 / YR</span><h3>smol Bridge</h3><p>Route the prompt to your own rig over Tailscale, bring your own Claude or Gemini key, the debrief engine, cross-turn encrypted memory. smol as the remote for the brain you already pay for.</p></div>
+  </div>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script src="assets/souls.js"></script>
+<script src="assets/launcher.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

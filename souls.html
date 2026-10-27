@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>smol — souls</title>
+<meta name="description" content="Nyx, Mochi and Bit: smol's three souls, live. Real shaders quantized to terminal glyphs, with distinct idle, listening, thinking and speaking states.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
+<script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
+</head>
+<body>
+<div class="prog"></div>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="souls.html" aria-current="page">Souls</a>
+    <a href="launcher.html" >Launcher</a>
+    <a href="index.html#roadmap">Roadmap</a>
+    <a href="spec.html" >Spec</a>
+    <a href="story.html" >Story</a>
+    <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+  </div>
+  <button class="nav-k" aria-label="Open command palette">⌘K</button>
+</nav>
+<main id="main">
+
+<section class="section wrap" style="padding-top:7rem;">
+  <div class="reveal" style="margin-bottom:1.8rem;">
+    <span class="sec-label">01 // LIVE</span>
+    <h2 class="grad" data-scramble>Three Souls, One Glyph Pass</h2>
+    <p class="prose">These are smol's own shaders, running here. One renders per frame into a small square; the stage and every phone on this site then quantize that frame into text cells. Tap the stage to switch souls.</p>
+  </div>
+
+  <div class="stage reveal reveal-scale" data-cycle>
+    <canvas class="soul" data-rows="20" data-autocols data-zoom="1.1"></canvas>
+    <div class="stage-hud">
+      <div class="vtabs" role="group" aria-label="Soul"><span class="pills" id="pills-souls"></span></div>
+      <div class="stage-note"><b data-soulname>nyx</b> · <span class="stateline">· idle</span></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="group"><label>state</label><div class="pills" id="pills-states"></div></div>
+    <div class="group"><label>render</label><div class="pills" id="pills-modes"></div></div>
+    <div class="group"><label>soul palette</label><div class="pills" id="pills-pals"></div></div>
+    <div class="group"><label>audio</label><div class="pills"><button type="button" class="pill-btn mint" data-toggle="music">♪ music reactive</button></div></div>
+  </div>
+  <div class="controls">
+    <div class="group"><label>theme · omarchy set</label><div class="pills" id="pills-themes"></div></div>
+    <div class="group"><label>extras</label><div class="pills" id="pills-themes2"></div></div>
+    <div class="group"><label>display</label><div class="pills"><button type="button" class="pill-btn" data-toggle="oled">● oled black</button></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal" style="margin-bottom:2rem;">
+    <span class="sec-label">02 // THE STATES</span>
+    <h2 data-scramble>Four Ways To Be Alive</h2>
+    <p class="prose">A soul that only changes volume reads as a screensaver. These change shape, and the same language runs across all three.</p>
+  </div>
+  <div class="grid grid-4 reveal" data-stagger="90">
+    <div class="card" data-tilt="6"><span class="num">· IDLE</span><h3>Sits back</h3><p>Smaller, dimmer, a slow breath. Mochi goes half-lidded. Bit goes sparse. The palette drifts.</p></div>
+    <div class="card" data-tilt="6"><span class="num">◌ LISTENING</span><h3>Leans in</h3><p>Bigger, spin stops, faces you. Sound comes <em>in</em>: rings contract toward the body under a VU tick ring. Mochi's eyes go wide; Bit snaps to a solid upright grid.</p></div>
+    <div class="card" data-tilt="6"><span class="num">◐ THINKING</span><h3>Churns</h3><p>A scan band sweeps the body, sparks orbit fast, the color cools. Mochi looks up and away with thought dots; Bit spins on the flow.</p></div>
+    <div class="card" data-tilt="6"><span class="num">♪ SPEAKING</span><h3>Pushes out</h3><p>Sound goes <em>out</em>: waves expand from the rim on the voice, a waveform runs through the center. One soft pulse per phrase, never per syllable. Mochi bounces and lets hearts go.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section wrap">
+  <div class="reveal" style="margin-bottom:2rem;">
+    <span class="sec-label">03 // HOW IT IS DRAWN</span>
+    <h2 data-scramble>Two Draws a Frame</h2>
+    <p class="prose">Eight pieces, one sentence each. The <a href="spec.html">spec page</a> has the exact numbers.</p>
+  </div>
+  <div class="parts reveal">
+    <div class="part"><span class="pn">01</span><span class="pk">the soul shader</span><p class="pv">One fragment shader per soul, rendered into a 160 px square (256 on device), taking breath, energy, beat, flow, voice and three state weights.</p></div>
+    <div class="part"><span class="pn">02</span><span class="pk">the palette</span><p class="pv">Cyclic, c1 → c2 → c3 → c1, offset by a slow global shift and a second noise field across the body, so the soul drifts through the theme's accents instead of sitting on one hue.</p></div>
+    <div class="part"><span class="pn">03</span><span class="pk">the cell grid</span><p class="pv">The soul region is columns and rows of the UI font; a cell is one monospace advance wide and two tall, so braille and half-blocks land where text would.</p></div>
+    <div class="part"><span class="pn">04</span><span class="pk">braille</span><p class="pv">Eight sub-dots per cell, sampled at their centers, thresholded against a 2×4 ordered dither, packed into U+2800 plus a mask; the glyph takes the alpha-weighted color of what lit it.</p></div>
+    <div class="part"><span class="pn">05</span><span class="pk">ramp</span><p class="pv">Mean luminance into <code> .:-=+*#%@</code>; classic ASCII art and the mid-tier fallback. Mochi's face reads best here.</p></div>
+    <div class="part"><span class="pn">06</span><span class="pk">blocks</span><p class="pv">Top and bottom halves sampled separately, posterized to four levels, drawn as a filled cell plus an upper half block. Bit's native look.</p></div>
+    <div class="part"><span class="pn">07</span><span class="pk">the state machine</span><p class="pv">Idle, listening, thinking and speaking are eased weights, not switches, so a soul fades from one signature into the next; the launcher drives them from the loop.</p></div>
+    <div class="part"><span class="pn">08</span><span class="pk">on Android</span><p class="pv">RuntimeShader one is the soul in AGSL; RuntimeShader two is the glyph pass with the soul as a child shader and a bitmap atlas of 256 braille glyphs. Zero readback. A CPU text path covers the charging screen and budget phones.</p></div>
+  </div>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a href="souls.html">Souls</a>
+    <a href="launcher.html">Launcher</a>
+    <a href="spec.html">Spec</a>
+    <a href="story.html">Story</a>
+    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
+    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  </div>
+</footer>
+<div class="pal" role="dialog" aria-label="Command palette">
+  <div class="pal-box">
+    <input type="text" placeholder="Type a command…" aria-label="Search">
+    <ul class="pal-list">
+      <li data-key="1"><a href="index.html">Home<kbd>1</kbd></a></li>
+      <li data-key="2"><a href="souls.html">Souls — Nyx, Mochi, Bit<kbd>2</kbd></a></li>
+      <li data-key="3"><a href="launcher.html">Launcher — four screens, live<kbd>3</kbd></a></li>
+      <li data-key="4"><a href="index.html#roadmap">Roadmap<kbd>4</kbd></a></li>
+      <li data-key="5"><a href="spec.html">Spec — shaders and state<kbd>5</kbd></a></li>
+      <li data-key="6"><a href="story.html">Story<kbd>6</kbd></a></li>
+      <li data-key="7"><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GeneralDussDuss on GitHub<kbd>7</kbd></a></li>
+    </ul>
+    <div class="pal-hint"><span>↑↓ Navigate</span><span>⏎ Select</span><span>Esc Close</span></div>
+  </div>
+</div>
+<script src="assets/souls.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
