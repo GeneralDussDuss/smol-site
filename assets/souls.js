@@ -267,9 +267,95 @@ window.SmolSouls = (function () {
   ].join('\n');
   var SHADERS = { nyx: NYX, mochi: MOCHI, bit: BIT };
 
+  /* ---------------- paste your rice ---------------- */
+  var RICE_KEYS = ['bg', 'fg', 'c1', 'c2', 'c3', 'dim', 'ok', 'warn'];
+  function normHex(v) {
+    var m = /^(?:#|0x)?([0-9a-f]{6}|[0-9a-f]{3})$/i.exec(String(v).replace(/^\s*['"]|['"]\s*$/g, '').trim());
+    if (!m) return null; var h = m[1].toLowerCase();
+    if (h.length === 3) h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+    return '#' + h;
+  }
+  function rgb(h) { return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)]; }
+  function mixHex(a, b, k) { var x = rgb(a), y = rgb(b), o = '#'; for (var i = 0; i < 3; i++) { var v = Math.round(x[i] + (y[i] - x[i]) * k); o += (v < 16 ? '0' : '') + v.toString(16); } return o; }
+  function lum(h) { var c = rgb(h).map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+  function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+  /* bg, fg and a map of ANSI colours {0..15} -> theme; null without bg + fg */
+  function riceFrom(bg, fg, n) {
+    if (!bg || !fg) return null;
+    return { name: 'your rice', bg: bg, fg: fg, c1: n[4] || fg, c2: n[5] || n[4] || fg, c3: n[6] || n[4] || fg,
+      dim: n[8] || mixHex(bg, fg, .45), ok: n[2] || n[6] || fg, warn: n[3] || n[1] || fg };
+  }
+  var ANSI = { black: 0, red: 1, green: 2, yellow: 3, blue: 4, magenta: 5, cyan: 6, white: 7 };
+  /* -> {theme, source, count} or {reason} */
+  function parseRiceEx(text) {
+    text = String(text == null ? '' : text);
+    var lines = text.split(/\r?\n/), i, m, v;
+    /* kitty.conf: "background #xxxxxx", "color4 #xxxxxx" */
+    var k = { n: {} }, kc = 0;
+    for (i = 0; i < lines.length; i++) {
+      m = /^\s*(background|foreground|color(\d{1,2}))\s+(\S+)/.exec(lines[i]); if (!m) continue;
+      v = normHex(m[3]); if (!v) continue;
+      if (m[1] === 'background') k.bg = v; else if (m[1] === 'foreground') k.fg = v;
+      else if (+m[2] < 16) k.n[+m[2]] = v; else continue;
+      kc++;
+    }
+    var t = riceFrom(k.bg, k.fg, k.n);
+    if (t) return { theme: t, source: 'kitty.conf', count: kc };
+    /* alacritty.toml ([colors.normal] blue = "#..") and alacritty.yml (normal:\n  blue: '0x..') */
+    var a = { n: {} }, ac = 0, sec = '', yml = false, put = function (s, key, val) {
+      var c = normHex(val); if (!c) return;
+      if (s === 'primary' && (key === 'background' || key === 'foreground')) { a[key === 'background' ? 'bg' : 'fg'] = c; ac++; }
+      else if ((s === 'normal' || s === 'bright') && ANSI[key] !== undefined) { a.n[ANSI[key] + (s === 'bright' ? 8 : 0)] = c; ac++; }
+    };
+    for (i = 0; i < lines.length; i++) {
+      var ln = lines[i].replace(/\s+#(?!\s*[0-9a-f]{3,6}\b).*$/i, '');
+      if ((m = /^\s*\[\s*([^\]]+?)\s*\]\s*$/.exec(ln))) { var p = m[1].split('.'); sec = p[0] === 'colors' && p.length === 2 ? p[1] : ''; continue; }
+      if ((m = /^\s*(primary|normal|bright)\s*=\s*\{(.*)\}/.exec(ln))) { var re = /(\w+)\s*=\s*("[^"]*"|'[^']*'|[^\s,]+)/g, q; while ((q = re.exec(m[2]))) put(m[1], q[1], q[2]); continue; }
+      if ((m = /^\s*(\w+)\s*:\s*$/.exec(ln))) { yml = true; sec = m[1]; continue; }
+      if ((m = /^\s*(\w+)\s*[=:]\s*(.+?)\s*,?\s*$/.exec(ln))) put(sec, m[1], m[2]);
+    }
+    t = riceFrom(a.bg, a.fg, a.n);
+    if (t) return { theme: t, source: yml ? 'alacritty.yml' : 'alacritty.toml', count: ac };
+    /* last resort: a plain list of hex colours, in theme order (bg fg c1 c2 c3 dim ok warn) */
+    var toks = text.match(/(?:#|0x)[0-9a-f]{6}\b/gi) || [];
+    if (!toks.length && /^[\s,;"'0-9a-f]+$/i.test(text)) toks = text.split(/[\s,;"']+/).filter(function (s) { return /^[0-9a-f]{6}$/i.test(s); });
+    var hx = toks.map(normHex).filter(Boolean);
+    if (hx.length >= 2) {
+      var o = { name: 'your rice', bg: hx[0], fg: hx[1] };
+      for (i = 2; i < 8; i++) o[RICE_KEYS[i]] = hx[i] || (RICE_KEYS[i] === 'dim' ? mixHex(o.bg, o.fg, .45) : o.fg);
+      return { theme: o, source: 'hex list', count: hx.length };
+    }
+    var bgf = k.bg || a.bg, fgf = k.fg || a.fg;
+    return { reason: !text.replace(/\s/g, '') ? 'nothing pasted' : (bgf || fgf) ? 'missing ' + (bgf ? 'foreground' : 'background') : 'no colours found (need kitty.conf, alacritty.toml or hex colours)' };
+  }
+  function parseRice(text) { var r = parseRiceEx(text); return r.theme ? r.theme : null; }
+  function riceLink(t) { return RICE_KEYS.map(function (k) { return t[k].slice(1); }).join('.'); }
+  /* strict: exactly 8 six-digit hex values */
+  function riceFromHash(s) {
+    var m = /^#?rice=([0-9a-fA-F.]+)$/.exec(String(s || '')); if (!m) return null;
+    var p = m[1].split('.'); if (p.length !== 8) return null;
+    var t = { name: 'your rice' };
+    for (var i = 0; i < 8; i++) { if (!/^[0-9a-fA-F]{6}$/.test(p[i])) return null; t[RICE_KEYS[i]] = '#' + p[i].toLowerCase(); }
+    return t;
+  }
+  function riceStore(t) { try { localStorage.setItem('smol-rice', JSON.stringify(RICE_KEYS.map(function (k) { return t[k]; }))); } catch (e) {} }
+  function riceRegister(t) { THEMES.custom = t; }
+  function riceUse(t) { riceRegister(t); riceStore(t); set('theme', 'custom'); }
+  function riceLoad() {
+    try {
+      var a = JSON.parse(localStorage.getItem('smol-rice') || 'null'); if (!a || a.length !== 8) return;
+      var t = { name: 'your rice' };
+      for (var i = 0; i < 8; i++) { var h = normHex(a[i]); if (!h) return; t[RICE_KEYS[i]] = h; }
+      riceRegister(t);
+    } catch (e) {}
+  }
+
   /* ---------------- state ---------------- */
   var st = { theme:'tokyo', oled:false, pal:'theme', soul:'nyx', state:'auto', mode:'braille', music:false };
   try { var saved = JSON.parse(localStorage.getItem('smol-souls') || '{}'); for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
+  riceLoad();
+  var hashRice = null; try { hashRice = riceFromHash(location.hash); } catch (e) {}
+  if (hashRice) { riceRegister(hashRice); riceStore(hashRice); st.theme = 'custom'; save(); }
   if (!THEMES[st.theme]) st.theme = 'tokyo';
   if (!SHADERS[st.soul]) st.soul = 'nyx';
   function save() { try { localStorage.setItem('smol-souls', JSON.stringify(st)); } catch (e) {} }
@@ -491,6 +577,7 @@ window.SmolSouls = (function () {
   return {
     THEMES: THEMES, PALS: PALS, SOUL_ORDER: SOUL_ORDER, STATES: STATES, STATE_LABEL: STATE_LABEL,
     SHADERS: { prelude: PRELUDE, nyx: NYX, mochi: MOCHI, bit: BIT },
+    parseRice: parseRice, parseRiceEx: parseRiceEx, riceUse: riceUse, riceLink: riceLink, contrast: contrast,
     state: st, set: set, theme: theme, drive: drive, rescan: rescan, layout: layout, start: start, onChange: function (f) { listeners.push(f); }, webgl: ok
   };
 })();

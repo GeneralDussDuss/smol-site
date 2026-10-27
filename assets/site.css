@@ -353,3 +353,14 @@ html.is-calm .reveal, html.is-still .reveal { opacity: 1; transform: none; trans
   .scroll-cue { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } .hero h1 span { opacity: 1; } }
+
+/* paste your rice */
+.rice { grid-column: 1 / -1; }
+.rice-box { margin-top: .45rem; display: flex; flex-direction: column; gap: .45rem; max-width: 36rem; }
+.rice-box[hidden] { display: none; }
+.rice-box textarea { width: 100%; resize: vertical; font-family: var(--font-mono); font-size: .68rem; line-height: 1.5; color: var(--body); background: var(--input); border: 1px solid var(--line); border-radius: 5px; padding: .6em .8em; outline: 0; }
+.rice-box textarea:focus { border-color: var(--line-hi); }
+.rice-row { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+.rice-status { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); margin-left: .4rem; min-width: 0; overflow-wrap: anywhere; }
+.rice-status.ok { color: var(--mint); }
+.rice-status.bad { color: var(--sun); }

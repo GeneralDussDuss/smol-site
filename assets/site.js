@@ -124,8 +124,8 @@
     var dot = function (c) { return '<span class="sw" style="background:' + c + '"></span>'; };
     var tri = function (a, b, c) { return '<span class="sw tri" style="--a:' + a + ';--b:' + b + ';--c:' + c + '"></span>'; };
     var T = S.THEMES, P = S.PALS;
-    pills(document.getElementById('pills-themes'), Object.keys(T).filter(function (k) { return !T[k].extra; }).map(function (k) { return { key: k, label: T[k].name, sw: dot(T[k].c1) }; }), 'theme');
-    pills(document.getElementById('pills-themes2'), Object.keys(T).filter(function (k) { return T[k].extra; }).map(function (k) { return { key: k, label: T[k].name, sw: dot(T[k].c1) }; }), 'theme');
+    pills(document.getElementById('pills-themes'), Object.keys(T).filter(function (k) { return k !== 'custom' && !T[k].extra; }).map(function (k) { return { key: k, label: T[k].name, sw: dot(T[k].c1) }; }), 'theme');
+    pills(document.getElementById('pills-themes2'), Object.keys(T).filter(function (k) { return k !== 'custom' && T[k].extra; }).map(function (k) { return { key: k, label: T[k].name, sw: dot(T[k].c1) }; }), 'theme');
     pills(document.getElementById('pills-souls'), [{ key: 'nyx', label: '✦ nyx · ethereal' }, { key: 'mochi', label: '♥ mochi · cutie' }, { key: 'bit', label: '▦ bit · voxel' }], 'soul');
     pills(document.getElementById('pills-pals'), Object.keys(P).map(function (k) { return { key: k, label: P[k].name, sw: P[k].c1 ? tri(P[k].c1, P[k].c2, P[k].c3) : '' }; }), 'pal');
     pills(document.getElementById('pills-states'), S.STATES.map(function (s) { return { key: s, label: s }; }), 'state');

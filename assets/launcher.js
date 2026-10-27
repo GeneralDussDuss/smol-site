@@ -52,11 +52,13 @@
     function brain(text) { echo(text, '>'); S.drive('thinking', 1400); setTimeout(function () { var it = intent(text); if (it) return propose(it); var a = ANSWERS[(Math.random() * ANSWERS.length) | 0]; S.drive('speaking', 700 + a.length * 45); say('<span class="ai">▸</span> ' + esc(a), 'say'); }, 900 + Math.random() * 700); }
     function builtin(text) { var parts = text.trim().split(/\s+/), cmd = parts[0], arg = parts.slice(1).join(' ').toLowerCase(), T = S.THEMES;
       switch (cmd) {
-        case 'help': say('<span class="dim">/app · theme &lt;name&gt; · theme oled · soul nyx|mochi|bit · posture · ls · clear · or just talk</span>'); return;
+        case 'help': say('<span class="dim">/app · theme &lt;name&gt; · theme rice · theme oled · soul nyx|mochi|bit · posture · ls · clear · or just talk</span>'); return;
         case 'clear': scrollEl.innerHTML = ''; return;
         case 'ls': say('<span class="dim">drwx  /music  /games  /work  /cam  · 12 apps</span>'); return;
         case 'posture': if (postureEl) postureEl.click(); return;
         case 'theme': if (arg === 'oled') { S.set('oled', !S.state.oled); say('<span class="c3">◆</span> oled black ' + (S.state.oled ? 'on' : 'off')); return; }
+          if ((arg === 'rice' || arg === 'yours' || arg === 'your rice') && !T.custom) { say('<span class="c3">✗</span> no rice yet <span class="dim">· paste one in the theme panel</span>'); return; }
+          if (arg === 'rice' || arg === 'yours') arg = 'custom';
           var k = Object.keys(T).filter(function (k2) { return k2 === arg || T[k2].name.replace(/[^a-z]/g, '') === arg.replace(/[^a-z]/g, ''); })[0];
           if (!k) { say('<span class="c3">✗</span> no theme "' + esc(arg) + '" <span class="dim">· ' + Object.keys(T).map(function (k3) { return T[k3].name; }).join(', ') + '</span>'); return; }
           S.set('theme', k); say('<span class="c3">◆</span> ' + T[k].name + ' <span class="dim">· soul re-palettes</span>'); return;
@@ -119,5 +121,35 @@
       S.rescan();
     }
     renderWidgets();
+  }
+  /* ---------- paste your rice ---------- */
+  var riceBtnHost = $('pills-rice'), riceBox = $('rice-box'), riceText = $('rice-text'), riceStatus = $('rice-status');
+  if (riceBtnHost && riceBox && riceText) {
+    var chip = document.createElement('button'); chip.type = 'button'; chip.className = 'pill-btn'; chip.id = 'pills-rice-custom'; riceBtnHost.appendChild(chip);
+    var lastLink = '', paintChip = function () {
+      var has = !!S.THEMES.custom, on = S.state.theme === 'custom';
+      chip.innerHTML = has ? '<span class="sw" style="background:' + S.THEMES.custom.c1 + '"></span>your rice' : '+ paste your rice';
+      chip.setAttribute('aria-pressed', String(on)); if (has) lastLink = S.riceLink(S.THEMES.custom);
+    };
+    var status = function (txt, cls) { riceStatus.textContent = txt; riceStatus.className = 'rice-status' + (cls ? ' ' + cls : ''); };
+    var link = function () { return location.origin + location.pathname + '#rice=' + lastLink; };
+    chip.addEventListener('click', function () {
+      if (S.THEMES.custom && S.state.theme !== 'custom') { S.set('theme', 'custom'); return; }
+      riceBox.hidden = !riceBox.hidden; chip.setAttribute('aria-expanded', String(!riceBox.hidden)); if (!riceBox.hidden) riceText.focus();
+    });
+    $('rice-apply').addEventListener('click', function () {
+      var r = S.parseRiceEx(riceText.value);
+      if (!r.theme) { status(r.reason, 'bad'); return; }
+      S.riceUse(r.theme);
+      var lo = S.contrast(r.theme.bg, r.theme.fg) < 3;
+      status(r.source + ' · ' + r.count + ' colours · applied' + (lo ? ' · low contrast fg/bg' : ''), lo ? 'bad' : 'ok');
+    });
+    $('rice-copy').addEventListener('click', function () {
+      if (!S.THEMES.custom) { status('nothing to link yet · apply a rice first', 'bad'); return; }
+      var u = link(), done = function () { status('link copied · ' + u.length + ' chars', 'ok'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(done, function () { status(u, 'ok'); }); else status(u, 'ok');
+    });
+    S.onChange(paintChip); paintChip();
+    if (S.THEMES.custom) status('saved rice loaded · ' + S.THEMES.custom.bg + ' / ' + S.THEMES.custom.fg, 'ok');
   }
 })();
