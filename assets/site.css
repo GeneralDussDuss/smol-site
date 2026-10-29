@@ -505,3 +505,4 @@ html.is-calm .reveal, html.is-still .reveal { opacity: 1; transform: none; trans
 .rice-status.ok { color: var(--mint); }
 .rice-status.bad { color: var(--sun); }
 .cap code { background: none; border: 0; padding: 0; color: var(--accent); }
+.wrap > .prose, .prose.reveal { max-width: var(--measure); }
