@@ -358,7 +358,7 @@ window.SmolSouls = (function () {
   }
 
   /* ---------------- state ---------------- */
-  var st = { theme:'tokyo', oled:false, pal:'theme', soul:'nyx', state:'auto', mode:'braille', music:false };
+  var st = { theme:'tokyo', oled:false, pal:'theme', soul:'nyx', state:'auto', mode:'braille', music:false, soft:true, trail:true };
   try { var saved = JSON.parse(localStorage.getItem('smol-souls') || '{}'); for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   riceLoad();
   var hashRice = null; try { hashRice = riceFromHash(location.hash); } catch (e) {}
@@ -445,6 +445,16 @@ window.SmolSouls = (function () {
   var R = 160, off = document.createElement('canvas'); off.width = R; off.height = R;
   var gl = off.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: false });
   var progs = {}, bandTex, pixels = new Uint8Array(R * R * 4), ok = false;
+  /* motion blur: the glyph pass reads an exponential moving average of the shader's frames, not the raw frame.
+     Fast moves leave a short fading trail, a soul or theme switch dissolves, and a dot near its threshold stops
+     flickering because it has to stay bright for a moment before it changes. */
+  var TRAIL_TAU = .085, trailF = new Float32Array(R * R * 4), trailU = new Uint8Array(R * R * 4), src = pixels, trailPrimed = false;
+  function blendTrail(dt) {
+    if (!st.trail) { src = pixels; trailPrimed = false; return; }
+    var k = trailPrimed ? 1 - Math.exp(-Math.max(dt, .001) / TRAIL_TAU) : 1;
+    for (var i = 0; i < pixels.length; i++) { var v = trailF[i] + (pixels[i] - trailF[i]) * k; trailF[i] = v; trailU[i] = v; }
+    trailPrimed = true; src = trailU;
+  }
   function compile(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
   if (gl) try {
     var vs = compile(gl.VERTEX_SHADER, 'attribute vec2 a; void main(){ gl_Position = vec4(a,0.,1.); }');
@@ -491,13 +501,14 @@ window.SmolSouls = (function () {
       s.c.style.height = s.H + 'px';
       s.c.width = Math.round(w * dpr); s.c.height = Math.round(s.H * dpr);
       s.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      s.dpr = dpr; s.img = s.ctx.createImageData(s.c.width, s.c.height); s.buf = new Uint32Array(s.img.data.buffer);
     });
   }
   window.addEventListener('resize', layout);
   function sample(ox, oy, out) {
     if (ox < 0 || ox >= 1 || oy < 0 || oy >= 1) { out[0] = out[1] = out[2] = out[3] = 0; return; }
     var x = (ox * (R - 1)) | 0, y = ((1 - oy) * (R - 1)) | 0, i = (y * R + x) * 4;
-    out[0] = pixels[i]; out[1] = pixels[i + 1]; out[2] = pixels[i + 2]; out[3] = pixels[i + 3];
+    out[0] = src[i]; out[1] = src[i + 1]; out[2] = src[i + 2]; out[3] = src[i + 3];
   }
   function luma(o) { return (o[0] * .30 + o[1] * .59 + o[2] * .11) / 255 * (o[3] / 255); }
   var mono = "'JetBrains Mono', ui-monospace, Menlo, monospace";
@@ -509,6 +520,7 @@ window.SmolSouls = (function () {
     var S = Math.min(W, H) * zoom;
     var mapX = function (u) { return .5 + (u - .5) * W / S; }, mapY = function (v) { return .5 + (v - .5) * H / S; };
     if (st.mode === 'raw') { ctx.imageSmoothingEnabled = true; ctx.globalAlpha = dim; ctx.drawImage(off, (W - S) / 2, (H - S) / 2, S, S); ctx.globalAlpha = 1; return; }
+    if (st.mode === 'braille' && st.soft && s.img) { softDots(s, mapX, mapY); return; }
     ctx.font = (ch * 1.02).toFixed(1) + 'px ' + mono; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     /* the soul fades out toward the canvas edges instead of stopping at them: a hard cut reads as a crop */
     var fadeC = Math.max(2, cols * .12), fadeR = Math.max(1.5, rows * .16);
@@ -546,6 +558,37 @@ window.SmolSouls = (function () {
     }
   }
 
+  /* soft dots: braille drawn dot by dot instead of picked from 256 glyphs. Each of a cell's eight dots is a
+     halftone disc, its area following the brightness under it (with a little of the ordered dither left in for
+     texture), anti-aliased at the edge. A dot grows and fades instead of popping on and off. */
+  var DOT_X = [.3, .7], DOT_Y = [.14, .38, .62, .86], DOT_R = .2;
+  function softDots(s, mapX, mapY) {
+    var cols = s.cols, rows = s.rows, dim = s.dim, img = s.img, d = img.data, PW = img.width, PH = img.height;
+    var sx = PW / cols, sy = PH / rows, r0 = DOT_R * sx;
+    var fadeC = Math.max(2, cols * .12), fadeR = Math.max(1.5, rows * .16);
+    s.buf.fill(0);
+    for (var j = 0; j < rows; j++) for (var i = 0; i < cols; i++) {
+      var ef = Math.min(1, Math.min(i + .5, cols - i - .5) / fadeC, Math.min(j + .5, rows - j - .5) / fadeR);
+      if (ef <= .02) continue;
+      var dimc = dim * ef * ef * (3 - 2 * ef);
+      for (var dy = 0; dy < 4; dy++) for (var dx = 0; dx < 2; dx++) {
+        sample(mapX((i + DOT_X[dx]) / cols), mapY((j + DOT_Y[dy]) / rows), tmp);
+        if (tmp[3] < 6) continue;
+        var c = (luma(tmp) * 1.35 - .02 - (DITH[dy][dx] - .47) * .1) / .36; /* thin rings and rims stay visible */
+        if (c < .04) continue; if (c > 1) c = 1;
+        disc(d, PW, PH, (i + DOT_X[dx]) * sx, (j + DOT_Y[dy]) * sy, Math.max(.6, r0 * Math.sqrt(c)), tmp[0], tmp[1], tmp[2], (tmp[3] / 255) * dimc * (.6 + .4 * c));
+      }
+    }
+    s.ctx.putImageData(img, 0, 0);
+  }
+  function disc(d, PW, PH, cx, cy, rad, r, g, b, alpha) {
+    var x0 = Math.max(0, (cx - rad - 1) | 0), x1 = Math.min(PW - 1, (cx + rad + 1) | 0);
+    var y0 = Math.max(0, (cy - rad - 1) | 0), y1 = Math.min(PH - 1, (cy + rad + 1) | 0);
+    for (var y = y0; y <= y1; y++) { var ddy = y + .5 - cy; for (var x = x0; x <= x1; x++) {
+      var ddx = x + .5 - cx, cov = rad + .5 - Math.sqrt(ddx * ddx + ddy * ddy); if (cov <= 0) continue; if (cov > 1) cov = 1;
+      var A = alpha * cov * 255, q = (y * PW + x) * 4; if (A > d[q + 3]) { d[q] = r; d[q + 1] = g; d[q + 2] = b; d[q + 3] = A; } } }
+  }
+
   /* ---------------- loop ---------------- */
   /* device tier: phones get fewer columns (layout) and a lower frame cap; the shader is the same everywhere */
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -559,7 +602,7 @@ window.SmolSouls = (function () {
     if ((reduced || still) && drawn > (still ? 40 : 1)) { requestAnimationFrame(frame); return; }
     acc += dt; var minFrame = document.hidden ? 1 : 1 / fpsCap;
     if (acc < minFrame) { requestAnimationFrame(frame); return; }
-    updateSignals(t, acc); acc = 0;
+    var fdt = acc; updateSignals(t, acc); acc = 0;
     var th = theme(), pl = soulPal();
     if (ok) {
       var P = progs[st.soul] || progs.nyx, U = P.U;
@@ -575,6 +618,7 @@ window.SmolSouls = (function () {
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       gl.readPixels(0, 0, R, R, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      blendTrail(fdt);
     }
     var t0 = performance.now();
     souls.forEach(function (s) { draw(s, th); });
