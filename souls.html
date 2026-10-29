@@ -16,7 +16,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="smol: a terminal home screen with a brain. The Nyx soul rendered in glyphs beside the wordmark.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#07060f">
+<meta name="theme-color" content="#07070a">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2307060f'/><text x='16' y='23' font-size='18' font-family='monospace' font-weight='bold' fill='%23b89cff' text-anchor='middle'>$</text></svg>">
 <link rel="stylesheet" href="assets/site.css">
 <script>(function(){var h=document.documentElement,m=window.matchMedia;var coarse=m&&(m('(hover: none)').matches||m('(pointer: coarse)').matches);var touch=coarse&&((navigator.maxTouchPoints||0)>0||'ontouchstart' in window);if(touch)h.className+=' is-touch';if(m&&m('(prefers-reduced-motion: reduce)').matches)h.className+=' is-calm';})();</script>
@@ -25,15 +25,17 @@
 <div class="prog"></div>
 <a class="skip" href="#main">Skip to content</a>
 <nav class="nav">
-  <a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
+  <a class="logo" href="index.html" aria-label="smol home"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a>
   <button class="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <div class="nav-links">
-    <a href="souls.html" aria-current="page">Souls</a>
-    <a href="launcher.html" >Launcher</a>
-    <a href="index.html#roadmap">Roadmap</a>
-    <a href="spec.html" >Spec</a>
-    <a href="story.html" >Story</a>
+    <a href="index.html#tour">How it works</a>
+    <a href="index.html#souls">Souls</a>
+    <a href="index.html#themes">Themes</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="launcher.html">Try it</a>
+    <a href="story.html">Story</a>
     <a class="nav-gh" href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+    <a class="nav-cta" href="index.html#beta">Join the beta</a>
   </div>
   <button class="nav-k" aria-label="Open command palette">⌘K</button>
 </nav>
@@ -41,8 +43,8 @@
 
 <section class="section wrap" style="padding-top:7rem;">
   <div class="reveal" style="margin-bottom:1.8rem;">
-    <span class="sec-label">01 // LIVE</span>
-    <h2 class="grad" data-scramble>Three Souls, One Glyph Pass</h2>
+    <span class="sec-label">Live</span>
+    <h2 class="grad">Three souls, one glyph pass.</h2>
     <p class="prose">These are smol's own shaders, running here. One renders per frame into a small square; the stage and every phone on this site then quantize that frame into text cells. Tap the stage to switch souls.</p>
   </div>
 
@@ -71,15 +73,15 @@
 
 <section class="section wrap">
   <div class="reveal" style="margin-bottom:2rem;">
-    <span class="sec-label">02 // THE STATES</span>
-    <h2 data-scramble>Four Ways To Be Alive</h2>
+    <span class="sec-label">The states</span>
+    <h2>Four ways to be alive.</h2>
     <p class="prose">A soul that only changes volume reads as a screensaver. These change shape, and the same language runs across all three.</p>
   </div>
   <div class="grid grid-4 reveal" data-stagger="90">
-    <div class="card" data-tilt="6"><span class="num">· IDLE</span><h3>Sits back</h3><p>Smaller, dimmer, a slow breath. Mochi goes half-lidded. Bit goes sparse. The palette drifts.</p></div>
-    <div class="card" data-tilt="6"><span class="num">◌ LISTENING</span><h3>Leans in</h3><p>Bigger, spin stops, faces you. Sound comes <em>in</em>: rings contract toward the body under a VU tick ring. Mochi's eyes go wide; Bit snaps to a solid upright grid.</p></div>
-    <div class="card" data-tilt="6"><span class="num">◐ THINKING</span><h3>Churns</h3><p>A scan band sweeps the body, sparks orbit fast, the color cools. Mochi looks up and away with thought dots; Bit spins on the flow.</p></div>
-    <div class="card" data-tilt="6"><span class="num">♪ SPEAKING</span><h3>Pushes out</h3><p>Sound goes <em>out</em>: waves expand from the rim on the voice, a waveform runs through the center. One soft pulse per phrase, never per syllable. Mochi bounces and lets hearts go.</p></div>
+    <div class="card"><span class="num">· IDLE</span><h3>Sits back</h3><p>Smaller, dimmer, a slow breath. Mochi goes half-lidded. Bit goes sparse. The palette drifts.</p></div>
+    <div class="card"><span class="num">◌ LISTENING</span><h3>Leans in</h3><p>Bigger, spin stops, faces you. Sound comes <em>in</em>: rings contract toward the body under a VU tick ring. Mochi's eyes go wide; Bit snaps to a solid upright grid.</p></div>
+    <div class="card"><span class="num">◐ THINKING</span><h3>Churns</h3><p>A scan band sweeps the body, sparks orbit fast, the color cools. Mochi looks up and away with thought dots; Bit spins on the flow.</p></div>
+    <div class="card"><span class="num">♪ SPEAKING</span><h3>Pushes out</h3><p>Sound goes <em>out</em>: waves expand from the rim on the voice, a waveform runs through the center. One soft pulse per phrase, never per syllable. Mochi bounces and lets hearts go.</p></div>
   </div>
 </section>
 
@@ -87,8 +89,8 @@
 
 <section class="section wrap">
   <div class="reveal" style="margin-bottom:2rem;">
-    <span class="sec-label">03 // HOW IT IS DRAWN</span>
-    <h2 data-scramble>Two Draws a Frame</h2>
+    <span class="sec-label">How it is drawn</span>
+    <h2>Two draws a frame.</h2>
     <p class="prose">Eight pieces, one sentence each. The <a href="spec.html">spec page</a> has the exact numbers.</p>
   </div>
   <div class="parts reveal">
@@ -105,13 +107,13 @@
 
 </main>
 <footer class="foot">
-  <div class="wrap foot-row">
-    <a href="souls.html">Souls</a>
-    <a href="launcher.html">Launcher</a>
-    <a href="spec.html">Spec</a>
-    <a href="story.html">Story</a>
-    <a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a>
-    <span class="foot-copy">© 2077 SMOL — A TERMINAL HOME SCREEN WITH A BRAIN. NOTHING LEAVES YOUR PHONE. BY GENERALDUSSDUSS.</span>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand"><a class="logo" href="index.html"><span class="logo-p">$</span><span class="logo-w">smol<i>_</i></span></a><p>A terminal home screen with a local brain and a soul. Nothing leaves your phone.</p></div>
+      <div class="foot-col"><h4>Product</h4><a href="index.html#tour">How it works</a><a href="index.html#pricing">Pricing</a><a href="launcher.html">Try it live</a><a href="souls.html">Soul lab</a></div>
+      <div class="foot-col"><h4>Build</h4><a href="index.html#roadmap">Roadmap</a><a href="spec.html">Spec</a><a href="story.html">Story</a><a href="https://github.com/GeneralDussDuss" target="_blank" rel="noopener">GitHub</a><a href="https://generaldussduss.github.io/orpheus-site/" target="_blank" rel="noopener">Orpheus</a></div>
+    </div>
+    <div class="foot-base"><span>© 2026 smol · by GeneralDussDuss</span><span>Made for people who rice their desktops and resent their phones.</span></div>
   </div>
 </footer>
 <div class="pal" role="dialog" aria-label="Command palette">

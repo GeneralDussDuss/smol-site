@@ -510,8 +510,13 @@ window.SmolSouls = (function () {
     var mapX = function (u) { return .5 + (u - .5) * W / S; }, mapY = function (v) { return .5 + (v - .5) * H / S; };
     if (st.mode === 'raw') { ctx.imageSmoothingEnabled = true; ctx.globalAlpha = dim; ctx.drawImage(off, (W - S) / 2, (H - S) / 2, S, S); ctx.globalAlpha = 1; return; }
     ctx.font = (ch * 1.02).toFixed(1) + 'px ' + mono; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    /* the soul fades out toward the canvas edges instead of stopping at them: a hard cut reads as a crop */
+    var fadeC = Math.max(2, cols * .12), fadeR = Math.max(1.5, rows * .16);
     for (var j = 0; j < rows; j++) for (var i = 0; i < cols; i++) {
       var cx = (i + .5) * cw, cy = (j + .5) * ch, r = 0, g = 0, b = 0, a = 0, n = 0, dx, dy, al;
+      var ef = Math.min(1, Math.min(i + .5, cols - i - .5) / fadeC, Math.min(j + .5, rows - j - .5) / fadeR);
+      if (ef <= .02) continue;
+      var dimc = dim * ef * ef * (3 - 2 * ef);
       if (st.mode === 'braille') {
         var mask = 0;
         for (dy = 0; dy < 4; dy++) for (dx = 0; dx < 2; dx++) {
@@ -520,20 +525,20 @@ window.SmolSouls = (function () {
           if (tmp[3] > 20) { r += tmp[0] * tmp[3]; g += tmp[1] * tmp[3]; b += tmp[2] * tmp[3]; a += tmp[3]; n++; }
         }
         if (!mask || !a) continue;
-        r /= a; g /= a; b /= a; al = (a / n / 255) * dim;
+        r /= a; g /= a; b /= a; al = (a / n / 255) * dimc;
         ctx.fillStyle = 'rgb(' + (lerp(bg[0], r, al) | 0) + ',' + (lerp(bg[1], g, al) | 0) + ',' + (lerp(bg[2], b, al) | 0) + ')';
         ctx.fillText(String.fromCharCode(0x2800 + mask), cx, cy);
       } else if (st.mode === 'ramp') {
         var L = 0;
         for (dy = 0; dy < 2; dy++) for (dx = 0; dx < 2; dx++) { sample(mapX((i + (dx + .5) / 2) / cols), mapY((j + (dy + .5) / 2) / rows), tmp); L += luma(tmp) / 4; r += tmp[0] / 4; g += tmp[1] / 4; b += tmp[2] / 4; a += tmp[3] / 4; }
         var idx = Math.min(RAMP.length - 1, (L * 1.2 * (RAMP.length - 1)) | 0); if (!idx) continue;
-        al = (a / 255) * dim;
+        al = (a / 255) * dimc;
         ctx.fillStyle = 'rgb(' + (lerp(bg[0], r, al) | 0) + ',' + (lerp(bg[1], g, al) | 0) + ',' + (lerp(bg[2], b, al) | 0) + ')';
         ctx.fillText(RAMP[idx], cx, cy);
       } else {
         var half = [[0, 0, 0, 0], [0, 0, 0, 0]];
         for (var h = 0; h < 2; h++) { r = g = b = a = 0; for (dy = 0; dy < 2; dy++) for (dx = 0; dx < 2; dx++) { sample(mapX((i + (dx + .5) / 2) / cols), mapY((j + (h * 2 + dy + .5) / 4) / rows), tmp); r += tmp[0] / 4; g += tmp[1] / 4; b += tmp[2] / 4; a += tmp[3] / 4; }
-          var lvl = Math.round((a / 255) * 3) / 3 * dim; half[h] = [lerp(bg[0], r, lvl) | 0, lerp(bg[1], g, lvl) | 0, lerp(bg[2], b, lvl) | 0, lvl]; }
+          var lvl = Math.round((a / 255) * 3) / 3 * dimc; half[h] = [lerp(bg[0], r, lvl) | 0, lerp(bg[1], g, lvl) | 0, lerp(bg[2], b, lvl) | 0, lvl]; }
         if (!half[0][3] && !half[1][3]) continue;
         ctx.fillStyle = 'rgb(' + half[1][0] + ',' + half[1][1] + ',' + half[1][2] + ')'; ctx.fillRect(cx - cw / 2, cy - ch / 2, cw + .5, ch + .5);
         ctx.fillStyle = 'rgb(' + half[0][0] + ',' + half[0][1] + ',' + half[0][2] + ')'; ctx.fillText('▀', cx, cy);
