@@ -7,16 +7,17 @@
 window.SmolSouls = (function () {
   'use strict';
 
-  /* The app's set (core/theme Themes.ALL): Omarchy's own palettes plus three extras, each with its own look. */
+  /* The app's set (core/theme Themes.ALL): Omarchy's own palettes plus three extras, each with its own look.
+     `free`: the three in the free tier (one cool dark, one warm dark, one light); the rest come with Pro. */
   var THEMES = {
-    tokyo:      {name:'tokyo night', bg:'#1a1b26', fg:'#c0caf5', c1:'#7aa2f7', c2:'#bb9af7', c3:'#7dcfff', dim:'#737aa2', ok:'#9ece6a', warn:'#e0af68'},
+    tokyo:      {name:'tokyo night', bg:'#1a1b26', fg:'#c0caf5', c1:'#7aa2f7', c2:'#bb9af7', c3:'#7dcfff', dim:'#737aa2', ok:'#9ece6a', warn:'#e0af68', free:true},
     catppuccin: {name:'catppuccin', bg:'#1e1e2e', fg:'#cdd6f4', c1:'#f5c2e7', c2:'#cba6f7', c3:'#94e2d5', dim:'#7f849c', ok:'#a6e3a1', warn:'#f9e2af'},
     ethereal:   {name:'ethereal', bg:'#060b1e', fg:'#ffcead', c1:'#7d82d9', c2:'#c89dc1', c3:'#e9bb4f', dim:'#6d7db6', ok:'#92a593', warn:'#eb8b54'},
     kanagawa:   {name:'kanagawa', bg:'#1f1f28', fg:'#dcd7ba', c1:'#957fb8', c2:'#e6c384', c3:'#7e9cd8', dim:'#727169', ok:'#98bb6c', warn:'#ffa066'},
     nord:       {name:'nord', bg:'#2e3440', fg:'#eceff4', c1:'#88c0d0', c2:'#a3be8c', c3:'#b48ead', dim:'#7b88a1', ok:'#a3be8c', warn:'#ebcb8b'},
     everforest: {name:'everforest', bg:'#2d353b', fg:'#d3c6aa', c1:'#a7c080', c2:'#e69875', c3:'#83c092', dim:'#859289', ok:'#a7c080', warn:'#dbbc7f'},
     jade:       {name:'osaka jade', bg:'#111c18', fg:'#c1c497', c1:'#2dd5b7', c2:'#549e6a', c3:'#d2689c', dim:'#5f7a6c', ok:'#549e6a', warn:'#e6b450'},
-    gruvbox:    {name:'gruvbox', bg:'#282828', fg:'#ebdbb2', c1:'#fabd2f', c2:'#fb4934', c3:'#b8bb26', dim:'#928374', ok:'#b8bb26', warn:'#fe8019'},
+    gruvbox:    {name:'gruvbox', bg:'#282828', fg:'#ebdbb2', c1:'#fabd2f', c2:'#fb4934', c3:'#b8bb26', dim:'#928374', ok:'#b8bb26', warn:'#fe8019', free:true},
     matte:      {name:'matte black', bg:'#121212', fg:'#bebebe', c1:'#e68e0d', c2:'#d35f5f', c3:'#ffc107', dim:'#6a6a6a', ok:'#9bb79b', warn:'#ffc107'},
     ristretto:  {name:'ristretto', bg:'#2c2525', fg:'#e6d9db', c1:'#fd6883', c2:'#f9cc6c', c3:'#a8a9eb', dim:'#8c8384', ok:'#adda78', warn:'#f9cc6c'},
     retro:      {name:'retro 82', bg:'#05182e', fg:'#f6dcac', c1:'#faa968', c2:'#8cbfb8', c3:'#f85525', dim:'#4f8a96', ok:'#8cbfb8', warn:'#faa968'},
@@ -27,7 +28,7 @@ window.SmolSouls = (function () {
     vesper:     {name:'vesper', bg:'#101010', fg:'#ffffff', c1:'#ffc799', c2:'#99ffe4', c3:'#ff8080', dim:'#707070', ok:'#99ffe4', warn:'#ffc799', extra:true},
     oxocarbon:  {name:'oxocarbon', bg:'#161616', fg:'#f2f4f8', c1:'#ff7eb6', c2:'#33b1ff', c3:'#be95ff', dim:'#7a7a7a', ok:'#42be65', warn:'#ffe97b', extra:true},
     vantablack: {name:'vantablack', bg:'#000000', fg:'#ffffff', c1:'#d0d0d0', c2:'#8d8d8d', c3:'#ffffff', dim:'#6a6a6a', ok:'#b6b6b6', warn:'#cecece'},
-    latte:      {name:'catppuccin latte', bg:'#eff1f5', fg:'#4c4f69', c1:'#8839ef', c2:'#1e66f5', c3:'#179299', dim:'#6c6f85', ok:'#2e7d1f', warn:'#b35c00', light:true},
+    latte:      {name:'catppuccin latte', bg:'#eff1f5', fg:'#4c4f69', c1:'#8839ef', c2:'#1e66f5', c3:'#179299', dim:'#6c6f85', ok:'#2e7d1f', warn:'#b35c00', light:true, free:true},
     dawn:       {name:'rosé pine dawn', bg:'#faf4ed', fg:'#464261', c1:'#b4637a', c2:'#286983', c3:'#907aa9', dim:'#797593', ok:'#286983', warn:'#a8661a', light:true},
     flexoki:    {name:'flexoki light', bg:'#fffcf0', fg:'#100f0f', c1:'#205ea6', c2:'#d14d41', c3:'#879a39', dim:'#6f6e69', ok:'#879a39', warn:'#d0772b', light:true}
   };

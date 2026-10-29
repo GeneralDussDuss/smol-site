@@ -221,6 +221,7 @@ code { font-family: var(--font-mono); font-size: .88em; color: var(--mint); }
 .controls { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.2rem; }
 .group { display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
 .group label { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.group label .pro-tag { margin-left: .5em; padding: .1em .55em; border: 1px solid var(--line-hi); border-radius: 999px; color: var(--sun); letter-spacing: .12em; }
 .pills { display: flex; flex-wrap: wrap; gap: .35rem; }
 
 /* ---------- phones ---------- */
