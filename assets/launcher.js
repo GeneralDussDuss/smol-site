@@ -13,8 +13,8 @@
     var PLACEHOLDER = 'try: set a 10 minute timer · /sp · theme nord';
     function say(html, cls) { var d = document.createElement('div'); d.className = 'line' + (cls ? ' ' + cls : ''); d.innerHTML = html; scrollEl.appendChild(d); while (scrollEl.children.length > 14) scrollEl.firstChild.remove(); return d; }
     function echo(t, sym) { return say('<span class="pr">' + (sym || '$') + '</span> ' + esc(t)); }
-    var posture = 'LOCKED';
-    if (postureEl) postureEl.addEventListener('click', function () { posture = posture === 'LOCKED' ? 'BALANCED' : 'LOCKED'; postureEl.textContent = posture; postureEl.classList.toggle('bal', posture === 'BALANCED');
+    var posture = 'LOCKED'; if (postureEl) postureEl.textContent = 'ASKS FIRST';
+    if (postureEl) postureEl.addEventListener('click', function () { posture = posture === 'LOCKED' ? 'BALANCED' : 'LOCKED'; postureEl.textContent = posture === 'LOCKED' ? 'ASKS FIRST' : 'LOW-RISK AUTO'; postureEl.classList.toggle('bal', posture === 'BALANCED');
       say('<span class="c2">◆</span> posture <b>' + posture.toLowerCase() + '</b> <span class="dim">· ' + (posture === 'LOCKED' ? 'asks before every action' : 'low-risk actions skip the ask') + ' · logged</span>'); });
 
     var TOOLS = {
@@ -39,7 +39,7 @@
       if ((m = t.match(/^(?:note|remember|jot)(?: that| down)?\s+(.+)$/))) return { tool: 'note', args: { text: m[1] } };
       return null;
     }
-    var ANSWERS = ['Eight to ten minutes for al dente; pull it a minute early if it goes in a sauce.', 'Nothing leaves the phone. I run on Gemma 4, right here, airplane mode and all.', 'Three souls, one glyph pass. You are talking to the pretty one.', 'Your next shift is at 18:30. You have time.', 'LOCKED means I ask before every action. BALANCED lets me skip the ask for low-risk ones.'];
+    var ANSWERS = ['Eight to ten minutes for al dente; pull it a minute early if it goes in a sauce.', 'Nothing leaves the phone. I run on Gemma 4, right here, airplane mode and all.', 'Three souls, one glyph pass. You are talking to the pretty one.', 'Your next shift is at 18:30. You have time.', 'ASKS FIRST means I ask before every action. LOW-RISK AUTO lets me skip the ask for low-risk ones.'];
     var awaiting = null;
     function fmtArgs(a) { return Object.keys(a).map(function (k) { var v = a[k]; return typeof v === 'boolean' ? (v ? 'on' : 'off') : (k === 'when' ? '<span class="c2">@' + esc(v) + '</span>' : '"' + esc(v) + '"'); }).join(' '); }
     function propose(it) { var tool = TOOLS[it.tool], needsAsk = posture === 'LOCKED' || tool.risk !== 'low';
