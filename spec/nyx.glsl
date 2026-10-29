@@ -61,6 +61,16 @@ void main(){
         body = mix(body, pal(.66 + sw*.3), wt*.35);
         col=over(col, body, aO);
       }
+      /* two lil eyes: soft lights, not holes. Half-lidded and deadpan at rest, wide open when listening, a glance up and away while thinking; they blink with the others */
+      vec2 look = vec2(sin(time*.31), sin(time*.47)*.5)*.008*(1.-wl) + vec2(.016, .02)*wt;
+      float lid = clamp(max(blink, .45 - wl*.4 + widle()*.25 - ws*.15), 0., 1.);
+      float ery = .034*(1.-lid) + .004;
+      vec2 eq = vec2(abs(q.x) - .068, q.y - .014 + lid*.01) - look;
+      float de = length(vec2(eq.x/.034, eq.y/ery)) - 1.;
+      float eyeA = smoothstep(px*2., -px*2., de) * edge;
+      col = over(col, bg, glow(max(de, 0.)*.03, .022)*.55*edge);
+      col = over(col, mix(c3, fg, .5), glow(max(de, 0.)*.03, .012)*.5*edge);
+      col = over(col, mix(fg, vec3(1.), .35), eyeA);
     }
   }
   col = over(col, mix(c3, fg, .3), fxListen(q, r, rim, ang) * wl);
