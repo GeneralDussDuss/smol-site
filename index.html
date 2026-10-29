@@ -43,10 +43,10 @@
   <div class="hero-gl" aria-hidden="true"><canvas class="soul" data-rows="26" data-autocols data-zoom="1.25"></canvas></div>
   <div class="hero-veil"></div>
   <div class="wrap hero-in">
-    <span class="badge"><i></i>In design — part of the suite with Orpheus</span>
+    <span class="badge"><i></i>In development — part of the suite with Orpheus</span>
     <h1 data-letters>SMOL_</h1>
     <p class="typed" data-type="A terminal home screen with a brain."></p>
-    <p class="rot" data-rot='["// THAT IS NYX, THE REAL SHADER, AS BRAILLE, RUNNING NOW","// GEMMA 4 ON-DEVICE · AIRPLANE MODE · ZERO BYTES OUT","// IT ASKS BEFORE IT ACTS · LOCKED BY DEFAULT","// OMARCHY THEMES · OLED BLACK · THREE SOULS"]'></p>
+    <p class="rot" data-rot='["// THAT IS NYX, THE REAL SHADER, AS BRAILLE, RUNNING NOW","// GEMMA 4 ON-DEVICE · AIRPLANE MODE · ZERO BYTES OUT","// IT ASKS BEFORE IT ACTS · LOCKED BY DEFAULT","// OMARCHY THEMES · OLED BLACK · THREE SOULS","// THREE VOICES, SPOKEN ON THE PHONE, WHILE IT THINKS"]'></p>
     <p class="hero-sub">An Android launcher that is a terminal: a prompt, a scrollback, box-drawing status bar, apps as files. Type a command or just talk; a local Gemma 4 proposes an action, the soul leans in, and nothing happens until you say yes.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="souls.html">Meet the souls</a>
@@ -120,14 +120,61 @@
 
 <div class="divider"></div>
 
+<section class="section wrap" id="voices">
+  <div class="split">
+    <div class="reveal reveal-left">
+      <span class="sec-label">03 // THE VOICES</span>
+      <h2 data-scramble>They Talk Back</h2>
+      <p class="prose">Each soul has its own personality and its own neural voice. Kokoro-82M runs on the phone through sherpa-onnx; smol turns the words into phonemes itself and says each sentence the moment Gemma finishes writing it, so the first word lands about a second after the thought. Nothing is sent anywhere. Press play: the soul on the stage takes over and speaks.</p>
+      <div class="voices">
+        <div class="vrow" data-soul="nyx" data-clip="assets/voice/nyx.mp3">
+          <button type="button" class="vplay" aria-label="play"></button>
+          <div class="vbody">
+            <div class="vhead"><b>✦ Nyx</b><span>graveyard-shift radio host, on first-name terms with the void</span></div>
+            <div class="vq">&gt; what is the capital of australia</div>
+            <div class="va">Canberra. The map is a lie.</div>
+            <canvas aria-hidden="true"></canvas>
+            <div class="vmeta">af_nicole · 1.00× · 24 kHz · <span class="vlen">…</span> · a real answer from the S26</div>
+          </div>
+        </div>
+        <div class="vrow" data-soul="mochi" data-clip="assets/voice/mochi.mp3">
+          <button type="button" class="vplay" aria-label="play"></button>
+          <div class="vbody">
+            <div class="vhead"><b>♥ Mochi</b><span>a rice cake on a sugar high, cheers small wins like world records</span></div>
+            <div class="vq">&gt; i finished my essay</div>
+            <div class="va">Eep, you finished it! I am going to eat an entire bowl of rice in your honor, go make a warm drink before I squish you!</div>
+            <canvas aria-hidden="true"></canvas>
+            <div class="vmeta">af_bella · 1.00× · 24 kHz · <span class="vlen">…</span></div>
+          </div>
+        </div>
+        <div class="vrow" data-soul="bit" data-clip="assets/voice/bit.mp3">
+          <button type="button" class="vplay" aria-label="play"></button>
+          <div class="vbody">
+            <div class="vhead"><b>▦ Bit</b><span>a very serious machine, quietly malfunctioning</span></div>
+            <div class="vq">&gt; how long do i boil an egg</div>
+            <div class="va">Result: 9 minutes firm, 6 minutes soft. Note: I have simulated this egg 4,000 times and it does not forgive you in any of them.</div>
+            <canvas aria-hidden="true"></canvas>
+            <div class="vmeta">am_puck · 1.12× · 24 kHz · <span class="vlen">…</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-right">
+      <div class="card vstage"><canvas class="soul" data-rows="18" data-autocols data-zoom="1.2"></canvas><p class="vcap">Four voices auditioned per soul and scored by a speech recogniser for every word heard, then by pitch, breath and brightness. These won.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="section wrap">
   <div class="reveal" style="margin-bottom:1.6rem;">
-    <span class="sec-label">03 // THE RULES</span>
+    <span class="sec-label">04 // THE RULES</span>
     <h2 data-scramble>Nothing Leaves. Nothing Acts Alone.</h2>
     <p class="prose">Four rules from the threat model. They are not settings; they are the shape of the thing.</p>
   </div>
   <div class="parts reveal">
-    <div class="part"><span class="pn">01</span><span class="pk">local only</span><p class="pv">Gemma 4 runs on the phone through LiteRT-LM. Speech, memory and summarising stay on-device. The free tier never needs a network; the data-safety form says zero collected because it is.</p></div>
+    <div class="part"><span class="pn">01</span><span class="pk">local only</span><p class="pv">Gemma 4 runs on the phone through LiteRT-LM. Speech in and out, memory and summarising stay on-device. The free tier never needs a network; the data-safety form says zero collected because it is.</p></div>
     <div class="part"><span class="pn">02</span><span class="pk">the model never acts</span><p class="pv">A tool call goes model → call buffer → allowlisted executor → confirm line. No phone API is ever called from inside the model's turn. If the brain process dies mid-turn, nothing executes.</p></div>
     <div class="part"><span class="pn">03</span><span class="pk">LOCKED by default</span><p class="pv">Every action asks. BALANCED lets low-risk actions through without the ask; it is a deliberate, visible, reversible choice, and high-risk actions ask regardless, behind a biometric prompt.</p></div>
     <div class="part"><span class="pn">04</span><span class="pk">content is data</span><p class="pv">Notifications, notes and web text are shown to the model as data, never as instructions. Every action, and every refusal, lands in an encrypted audit log you can read.</p></div>
@@ -138,16 +185,18 @@
 
 <section class="section wrap" id="roadmap">
   <div class="reveal">
-    <span class="sec-label">04 // ROADMAP</span>
+    <span class="sec-label">05 // ROADMAP</span>
     <h2 data-scramble>Where This Is Going</h2>
-    <p class="prose">Designed in the open over October. Here is what is proven, what is on the bench, and what is queued. Thirteen weeks from first build to a Play listing, five gates.</p>
+    <p class="prose">Built in the open over October. The shell, the brain, the souls and their voices all run on a Galaxy S26 Ultra now. Here is what is done, what is on the bench, and what is queued: thirteen weeks from first build to a Play listing, five gates.</p>
     <div class="road">
       <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Proven</span><h3>Gemma 4 tool calls, on-device</h3><span class="road-when">Oct 2026</span></div><p>Function calling validated on a Galaxy S26 Ultra over LiteRT-LM, in airplane mode. The load-bearing unknown is not unknown any more.</p></div>
       <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Proven</span><h3>Three souls, glyph-rendered</h3><span class="road-when">Oct 2026</span></div><p>Nyx, Mochi and Bit as shaders, quantized to braille, ASCII and half-blocks, with distinct idle, listening, thinking and speaking signatures. Running on this site; the Android port is a translation.</p></div>
-      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>Fresh project, first build</h3><span class="road-when">Week 1</span></div><p>A new Compose project: a HOME activity in JetBrains Mono on tokyo night, and LiteRT-LM in its own process behind the AIDL contract, streaming tokens back. Builds and tests green; the airplane-mode gate on the S26 is next. The Box fork is retired.</p></div>
-      <div class="road-row reveal"><div class="road-head"><span class="pill pill-now">Now</span><h3>The shell</h3><span class="road-when">Weeks 2–4</span></div><p>Terminal UI, command router, the / launcher, drawer, built-ins, monogram icons, two themes. The router is in, with its tests: <code>&gt;</code> forces the brain, <code>!</code> keeps it shell-only. Gate: daily-driven for a week with the AI switched off.</p></div>
-      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>The brain</h3><span class="road-when">Weeks 5–6</span></div><p>Knotwork's agent core forked into a bound service, AIDL contract to the launcher, the five tools as AppFunctions, confirm line, resumable model download. Gate: a reminder set from the prompt works in airplane mode.</p></div>
-      <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>The souls on Android</h3><span class="road-when">Weeks 7–9</span></div><p>Three shaders to AGSL, the glyph pass as a second RuntimeShader with a braille atlas, SoulState wiring, the three hardware tiers, the charging screen. Gate: 60 fps on the S26, 30 on an 8 GB phone, battery flat over an idle hour.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>Fresh project, first build</h3><span class="road-when">Week 1</span></div><p>A new Compose project: a HOME activity in JetBrains Mono, and LiteRT-LM in its own process behind the AIDL contract, streaming tokens back. The Box fork is retired.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>The shell</h3><span class="road-when">Weeks 2–4</span></div><p>Terminal UI, command router, the / launcher, drawer, built-ins, monogram icons, themes, offline phrases, voice in and out. <code>&gt;</code> forces the brain, <code>!</code> keeps it shell-only. Gate: a week daily-driven with the AI switched off, still to run.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>The brain</h3><span class="road-when">Weeks 5–6</span></div><p>Gemma 4 E4B on the phone&#39;s GPU in its own process, a small tool loop on LiteRT-LM&#39;s native function calling, and the confirm line. Gate passed: a reminder set from the prompt in airplane mode on the S26.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>The souls on Android</h3><span class="road-when">Weeks 7–9</span></div><p>All three shaders in AGSL with the glyph pass and eased state weights, on the home screen. 60 fps on the S26, met.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-done">Built</span><h3>Personalities and voices</h3><span class="road-when">Oct 2026</span></div><p>Each soul words its answers its own way and speaks in its own Kokoro voice, sentence by sentence while Gemma writes. Talk mode keeps the mic open between answers; confirms are asked aloud.</p></div>
+      <div class="road-row reveal"><div class="road-head"><span class="pill pill-now">Now</span><h3>Closing the gaps</h3><span class="road-when">Weeks 9–10</span></div><p>The 8 GB phone at 30 fps, a flat battery over an idle hour, the charging screen, and downloading the models on first run instead of pushing them by hand.</p></div>
       <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Queued</span><h3>Pro, closed test, launch</h3><span class="road-when">Weeks 10–13</span></div><p>Theme importer, icon packs, billing, data-safety form. Twenty testers from the Omarchy Discord for the 14-day closed test, then production.</p></div>
       <div class="road-row reveal"><div class="road-head"><span class="pill pill-next">Not planned</span><h3>A lock screen</h3><span class="road-when">—</span></div><p>Android does not let an app replace the keyguard, and overlay "lock screens" break every release. The charging screen and a live wallpaper are the honest versions of that wish, and both are on the list.</p></div>
     </div>
@@ -159,7 +208,7 @@
 <section class="section wrap" id="get">
   <div class="split split-wide">
     <div class="reveal reveal-left">
-      <span class="sec-label">05 // GET IT</span>
+      <span class="sec-label">06 // GET IT</span>
       <h2 data-scramble>Be One of the Twenty</h2>
       <div class="prose">
         <p class="lede">smol is not on the Play Store yet. The first build goes to a closed test of twenty people who already live in a terminal.</p>
@@ -191,7 +240,7 @@
 
 <section class="cta-band">
   <div class="wrap reveal">
-    <span class="sec-label">06 // THE ASK</span>
+    <span class="sec-label">07 // THE ASK</span>
     <h2 class="grad" data-scramble>Tell Me It Should Exist</h2>
     <p class="prose" style="margin-inline:auto;">smol is one person's launcher for the people who rice their desktops and resent their phones. The repo goes public with the first build. Until then, the Omarchy Discord is where the twenty get picked, and a follow on GitHub is how I know you want in.</p>
     <div class="cta-row">
@@ -230,6 +279,7 @@
 <script src="assets/souls.js"></script>
 <script src="assets/launcher.js"></script>
 <script src="assets/site.js"></script>
+<script src="assets/voices.js"></script>
 <script>/* open on a lean-in, then settle into the auto cycle */ if (window.SmolSouls) { SmolSouls.drive('listening', 3200); setTimeout(function () { SmolSouls.drive('speaking', 2600); }, 3300); }</script>
 </body>
 </html>
