@@ -7,24 +7,29 @@
 window.SmolSouls = (function () {
   'use strict';
 
+  /* The app's set (core/theme Themes.ALL): Omarchy's own palettes plus three extras, each with its own look. */
   var THEMES = {
-    tokyo:      {name:'tokyo night', bg:'#1a1b26', fg:'#c0caf5', c1:'#7aa2f7', c2:'#bb9af7', c3:'#7dcfff', dim:'#565f89', ok:'#9ece6a', warn:'#e0af68'},
-    catppuccin: {name:'catppuccin',  bg:'#1e1e2e', fg:'#cdd6f4', c1:'#89b4fa', c2:'#cba6f7', c3:'#f5c2e7', dim:'#6c7086', ok:'#a6e3a1', warn:'#f9e2af'},
-    everforest: {name:'everforest',  bg:'#2d353b', fg:'#d3c6aa', c1:'#a7c080', c2:'#7fbbb3', c3:'#d699b6', dim:'#859289', ok:'#a7c080', warn:'#dbbc7f'},
-    ethereal:   {name:'ethereal',    bg:'#171722', fg:'#d9d7e8', c1:'#9b8cf0', c2:'#c6a4f2', c3:'#8bd3e6', dim:'#5e5c7a', ok:'#a3d9a5', warn:'#e8c187'},
-    hackerman:  {name:'hackerman',   bg:'#0b0f0b', fg:'#9cd49c', c1:'#4af626', c2:'#8be28b', c3:'#d2ffd2', dim:'#3a6a3a', ok:'#4af626', warn:'#d6e85a'},
-    gruvbox:    {name:'gruvbox',     bg:'#282828', fg:'#ebdbb2', c1:'#fe8019', c2:'#fabd2f', c3:'#d3869b', dim:'#928374', ok:'#b8bb26', warn:'#fabd2f'},
-    kanagawa:   {name:'kanagawa',    bg:'#1f1f28', fg:'#dcd7ba', c1:'#7e9cd8', c2:'#957fb8', c3:'#d27e99', dim:'#727169', ok:'#98bb6c', warn:'#e6c384'},
-    matte:      {name:'matte black', bg:'#121212', fg:'#bebebe', c1:'#8a8a8d', c2:'#d8d8d8', c3:'#f5f5f5', dim:'#4f4f52', ok:'#9bb79b', warn:'#c9b27a'},
-    nord:       {name:'nord',        bg:'#2e3440', fg:'#d8dee9', c1:'#88c0d0', c2:'#81a1c1', c3:'#b48ead', dim:'#4c566a', ok:'#a3be8c', warn:'#ebcb8b'},
-    jade:       {name:'osaka jade',  bg:'#111c18', fg:'#c1c497', c1:'#2d8a6a', c2:'#71c7a5', c3:'#e6b450', dim:'#4f6b5f', ok:'#71c7a5', warn:'#e6b450'},
-    ristretto:  {name:'ristretto',   bg:'#2c2525', fg:'#e6d9db', c1:'#f38d70', c2:'#a8a9eb', c3:'#fd6883', dim:'#72696a', ok:'#adda78', warn:'#f9cc6c'},
-    rose:       {name:'rosé pine',   bg:'#191724', fg:'#e0def4', c1:'#c4a7e7', c2:'#ebbcba', c3:'#9ccfd8', dim:'#6e6a86', ok:'#9ccfd8', warn:'#f6c177'},
-    cyberdream: {name:'cyberdream',  bg:'#16181a', fg:'#ffffff', c1:'#5ea1ff', c2:'#bd5eff', c3:'#5ef1ff', dim:'#5c6370', ok:'#5eff6c', warn:'#f1ff5e', extra:true},
-    vesper:     {name:'vesper',      bg:'#101010', fg:'#ffffff', c1:'#ffc799', c2:'#99ffe4', c3:'#ff8080', dim:'#5a5a5a', ok:'#99ffe4', warn:'#ffc799', extra:true},
-    oxocarbon:  {name:'oxocarbon',   bg:'#161616', fg:'#f2f4f8', c1:'#33b1ff', c2:'#be95ff', c3:'#ff7eb6', dim:'#6f6f6f', ok:'#42be65', warn:'#ffe97b', extra:true},
-    poimandres: {name:'poimandres',  bg:'#1b1e28', fg:'#a6accd', c1:'#89ddff', c2:'#add7ff', c3:'#fcc5e9', dim:'#506477', ok:'#5de4c7', warn:'#fffac2', extra:true},
-    carbonfox:  {name:'carbonfox',   bg:'#161616', fg:'#f2f4f8', c1:'#78a9ff', c2:'#be95ff', c3:'#ee5396', dim:'#6f6f6f', ok:'#25be6a', warn:'#dbb32d', extra:true}
+    tokyo:      {name:'tokyo night', bg:'#1a1b26', fg:'#c0caf5', c1:'#7aa2f7', c2:'#bb9af7', c3:'#7dcfff', dim:'#737aa2', ok:'#9ece6a', warn:'#e0af68'},
+    catppuccin: {name:'catppuccin', bg:'#1e1e2e', fg:'#cdd6f4', c1:'#f5c2e7', c2:'#cba6f7', c3:'#94e2d5', dim:'#7f849c', ok:'#a6e3a1', warn:'#f9e2af'},
+    ethereal:   {name:'ethereal', bg:'#060b1e', fg:'#ffcead', c1:'#7d82d9', c2:'#c89dc1', c3:'#e9bb4f', dim:'#6d7db6', ok:'#92a593', warn:'#eb8b54'},
+    kanagawa:   {name:'kanagawa', bg:'#1f1f28', fg:'#dcd7ba', c1:'#957fb8', c2:'#e6c384', c3:'#7e9cd8', dim:'#727169', ok:'#98bb6c', warn:'#ffa066'},
+    nord:       {name:'nord', bg:'#2e3440', fg:'#eceff4', c1:'#88c0d0', c2:'#a3be8c', c3:'#b48ead', dim:'#7b88a1', ok:'#a3be8c', warn:'#ebcb8b'},
+    everforest: {name:'everforest', bg:'#2d353b', fg:'#d3c6aa', c1:'#a7c080', c2:'#e69875', c3:'#83c092', dim:'#859289', ok:'#a7c080', warn:'#dbbc7f'},
+    jade:       {name:'osaka jade', bg:'#111c18', fg:'#c1c497', c1:'#2dd5b7', c2:'#549e6a', c3:'#d2689c', dim:'#5f7a6c', ok:'#549e6a', warn:'#e6b450'},
+    gruvbox:    {name:'gruvbox', bg:'#282828', fg:'#ebdbb2', c1:'#fabd2f', c2:'#fb4934', c3:'#b8bb26', dim:'#928374', ok:'#b8bb26', warn:'#fe8019'},
+    matte:      {name:'matte black', bg:'#121212', fg:'#bebebe', c1:'#e68e0d', c2:'#d35f5f', c3:'#ffc107', dim:'#6a6a6a', ok:'#9bb79b', warn:'#ffc107'},
+    ristretto:  {name:'ristretto', bg:'#2c2525', fg:'#e6d9db', c1:'#fd6883', c2:'#f9cc6c', c3:'#a8a9eb', dim:'#8c8384', ok:'#adda78', warn:'#f9cc6c'},
+    retro:      {name:'retro 82', bg:'#05182e', fg:'#f6dcac', c1:'#faa968', c2:'#8cbfb8', c3:'#f85525', dim:'#4f8a96', ok:'#8cbfb8', warn:'#faa968'},
+    hackerman:  {name:'hackerman', bg:'#0b0c16', fg:'#ddf7ff', c1:'#82fb9c', c2:'#7cf8f7', c3:'#50f7d4', dim:'#4f6a8a', ok:'#4fe88f', warn:'#50f7d4'},
+    lumon:      {name:'lumon', bg:'#0e1b24', fg:'#d6e2ee', c1:'#8bc9eb', c2:'#b4e4f6', c3:'#4d86b0', dim:'#56718a', ok:'#8bc9eb', warn:'#b4e4f6'},
+    miasma:     {name:'miasma', bg:'#222222', fg:'#c2c2b0', c1:'#c9a554', c2:'#bb7744', c3:'#5f875f', dim:'#7a7a6a', ok:'#5f875f', warn:'#b36d43'},
+    cyberdream: {name:'cyberdream', bg:'#16181a', fg:'#ffffff', c1:'#bd5eff', c2:'#5ef1ff', c3:'#5eff6c', dim:'#6f7680', ok:'#5eff6c', warn:'#f1ff5e', extra:true},
+    vesper:     {name:'vesper', bg:'#101010', fg:'#ffffff', c1:'#ffc799', c2:'#99ffe4', c3:'#ff8080', dim:'#707070', ok:'#99ffe4', warn:'#ffc799', extra:true},
+    oxocarbon:  {name:'oxocarbon', bg:'#161616', fg:'#f2f4f8', c1:'#ff7eb6', c2:'#33b1ff', c3:'#be95ff', dim:'#7a7a7a', ok:'#42be65', warn:'#ffe97b', extra:true},
+    vantablack: {name:'vantablack', bg:'#000000', fg:'#ffffff', c1:'#d0d0d0', c2:'#8d8d8d', c3:'#ffffff', dim:'#6a6a6a', ok:'#b6b6b6', warn:'#cecece'},
+    latte:      {name:'catppuccin latte', bg:'#eff1f5', fg:'#4c4f69', c1:'#8839ef', c2:'#1e66f5', c3:'#179299', dim:'#6c6f85', ok:'#2e7d1f', warn:'#b35c00', light:true},
+    dawn:       {name:'rosé pine dawn', bg:'#faf4ed', fg:'#464261', c1:'#b4637a', c2:'#286983', c3:'#907aa9', dim:'#797593', ok:'#286983', warn:'#a8661a', light:true},
+    flexoki:    {name:'flexoki light', bg:'#fffcf0', fg:'#100f0f', c1:'#205ea6', c2:'#d14d41', c3:'#879a39', dim:'#6f6e69', ok:'#879a39', warn:'#d0772b', light:true}
   };
   var PALS = {
     theme:  {name:'match theme'},
@@ -363,7 +368,7 @@ window.SmolSouls = (function () {
   var listeners = [];
   function emit() { listeners.forEach(function (f) { f(st); }); }
 
-  function theme() { var t = THEMES[st.theme]; if (!st.oled) return t; var o = {}; for (var k in t) o[k] = t[k]; o.bg = '#000000'; return o; }
+  function theme() { var t = THEMES[st.theme] || THEMES.tokyo; if (!st.oled || t.light) return t; var o = {}; for (var k in t) o[k] = t[k]; o.bg = '#000000'; return o; }
   function soulPal() {
     var t = theme();
     if (st.pal === 'mono') return { c1: t.dim, c2: t.fg, c3: t.fg };
