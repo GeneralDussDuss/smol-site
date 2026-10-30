@@ -66,16 +66,25 @@
       } }
     /* the / launcher */
     var APPS = ['spotify', 'signal', 'chrome', 'tidal', 'steam', 'obsidian', 'termux', 'github', 'proton', 'maps', 'photos', 'tailscale', 'camera', 'settings', 'youtube', 'calendar', 'files', 'clock', 'speedtest', 'syncthing', 'terminal'];
+    /* smol's own places, listed after the apps: label -> built-in word, glyph in the monogram square (menu is options under its other name) */
+    var PLACES = [{ n: 'options', w: 'options', g: '≡' }, { n: 'menu', w: 'options', g: '≡' }, { n: 'help', w: 'help', g: '?' }, { n: 'history', w: 'history', g: '◆' }];
     var hits = [], sel = 0;
-    var mono = function (n) { return n.slice(0, 1).toUpperCase() + n.slice(1, 2); };
+    var mono = function (h) { return h.p ? h.p.g : h.n.slice(0, 1).toUpperCase() + h.n.slice(1, 2); };
     function fuzzy(q, name) { var i = 0; for (var c = 0; c < name.length; c++) if (name[c] === q[i]) i++; return i === q.length; }
     function renderLaunch() { var v = promptEl.value; if (v[0] !== '/') { launchEl.hidden = true; return; } var q = v.slice(1).toLowerCase();
-      hits = APPS.filter(function (n) { return fuzzy(q, n); }).sort(function (a, b) { return ((a.indexOf(q) === 0 ? 0 : 1) + a.length / 100) - ((b.indexOf(q) === 0 ? 0 : 1) + b.length / 100); }).slice(0, 5);
+      var pool = APPS.map(function (n) { return { n: n }; }).concat(PLACES.map(function (p) { return { n: p.n, p: p }; })).filter(function (h) { return fuzzy(q, h.n); });
+      if (!q) { var seen = {}; pool = pool.filter(function (h) { if (!h.p) return true; if (seen[h.p.w]) return false; seen[h.p.w] = 1; return true; }); hits = pool.filter(function (h) { return !h.p; }).slice(0, 5).concat(pool.filter(function (h) { return h.p; })); }
+      else { var rank = function (h) { return (h.n.indexOf(q) === 0 ? 0 : 1) * 1000 + (h.p ? 100 : 0) + h.n.length; }; var seen2 = {};
+        hits = pool.sort(function (a, b) { return rank(a) - rank(b); }).filter(function (h) { if (!h.p) return true; if (seen2[h.p.w]) return false; seen2[h.p.w] = 1; return true; }).slice(0, 5); }
       sel = Math.min(sel, Math.max(0, hits.length - 1));
-      launchEl.innerHTML = hits.length ? hits.map(function (n, i) { var k = n.indexOf(q), label = q && k >= 0 ? n.slice(0, k) + '<span class="m">' + n.slice(k, k + q.length) + '</span>' + n.slice(k + q.length) : n;
-        return '<div class="hit' + (i === sel ? ' sel' : '') + '" data-i="' + i + '"><span class="g">' + mono(n) + '</span><span>' + label + '</span><span class="k">' + (i === sel ? '↵' : '') + '</span></div>'; }).join('') : '<div class="none">no app matches /' + esc(q) + '</div>';
+      launchEl.innerHTML = hits.length ? hits.map(function (h, i) { var n = h.n, k = n.indexOf(q), label = q && k >= 0 ? n.slice(0, k) + '<span class="m">' + n.slice(k, k + q.length) + '</span>' + n.slice(k + q.length) : n;
+        return '<div class="hit' + (i === sel ? ' sel' : '') + '" data-i="' + i + '"><span class="g">' + mono(h) + '</span><span>' + label + '</span><span class="k">' + (i === sel ? '↵' : '') + '</span></div>'; }).join('') : '<div class="none">no app matches /' + esc(q) + '</div>';
       launchEl.hidden = false; }
-    function launch(n) { echo('/' + n); say('<span class="dim">↗</span> ' + n[0].toUpperCase() + n.slice(1)); promptEl.value = ''; launchEl.hidden = true; sel = 0; }
+    function place(p) { echo('/' + p.w); promptEl.value = ''; launchEl.hidden = true; sel = 0;
+      if (p.w === 'help') return builtin('help');
+      if (p.w === 'options') return say('<span class="c3">◆</span> options <span class="dim">· in the app this opens the panel</span>');
+      say('<span class="c3">◆</span> history <span class="dim">· sealed on this phone</span>'); }
+    function launch(h) { if (h.p) return place(h.p); var n = h.n; echo('/' + n); say('<span class="dim">↗</span> ' + n[0].toUpperCase() + n.slice(1)); promptEl.value = ''; launchEl.hidden = true; sel = 0; }
     function submit() { var text = promptEl.value.trim(); if (!text) return; promptEl.value = ''; launchEl.hidden = true;
       if (awaiting) { var y = /^(y|yes|yeah|yep|do it|sure|ok)$/i.test(text), nn = /^(n|no|nah|nope|cancel|stop)$/i.test(text); echo(text, '?'); if (y || nn) return execute(awaiting, y); say('<span class="dim">  unclear · nothing done · y or n</span>'); return; }
       if (text[0] === '/') { if (hits[sel]) launch(hits[sel]); return; }
